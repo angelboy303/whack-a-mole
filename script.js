@@ -158,7 +158,7 @@ class WhacAMole {
                     if (!hole.classList.contains('caught')) {
                         hole.classList.remove('active', 'removing');
                     }
-                }, 200);
+                }, 300);
             }
         });
 
@@ -196,7 +196,7 @@ class WhacAMole {
             }
         }
         
-        const disappearTime = this.isUltraFeverTime ? 800 : (this.isFeverTime ? 1000 : 1200);
+        const disappearTime = this.isUltraFeverTime ? 1000 : (this.isFeverTime ? 1200 : 1500);
         
         setTimeout(() => {
             this.holes.forEach(hole => {
@@ -206,7 +206,7 @@ class WhacAMole {
                         if (!hole.classList.contains('caught')) {
                             hole.classList.remove('active', 'removing');
                         }
-                    }, 200);
+                    }, 300);
                 }
             });
         }, disappearTime);
@@ -234,14 +234,11 @@ class WhacAMole {
         // 잡힌 상태로 변경 (깨꼬닥 이미지로 전환)
         hole.classList.add('caught');
         
-        // 게임 상태에 따라 다른 지속 시간 적용
-        const caughtDuration = this.isUltraFeverTime ? 1000 : (this.isFeverTime ? 1200 : 1400);
-        
         // 애니메이션 완료 후 상태 초기화
         setTimeout(() => {
             hole.classList.remove('caught');
             hole.classList.remove('active');
-        }, caughtDuration);
+        }, 500);
     }
     
     endGame() {
