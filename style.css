@@ -155,7 +155,7 @@ body {
 
 .hole.caught::after {
     background-image: url('images/beaver-caught.png') !important;
-    animation: caughtAnimation var(--caught-duration, 1400ms) ease-out !important;
+    animation: caughtAnimation var(--caught-duration, 1400ms) ease-out forwards !important;
     opacity: 1 !important;
 }
 
@@ -422,24 +422,15 @@ button:active {
         padding: 5px;
     }
 
+    .hole.active::after,
+    .hole.caught::after {
+        width: 90%;
+        height: 90%;
+    }
+
     .game-info {
         flex-direction: column;
         gap: 10px;
-    }
-
-    .score-goals {
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .hole.active::after {
-        width: 70%;
-        height: 70%;
-    }
-
-    button {
-        padding: 12px 24px;
-        font-size: 1em;
     }
 }
 
@@ -449,13 +440,10 @@ button:active {
         font-size: 1.2em;
     }
 
-    .hole.active::after {
-        width: 60%;
-        height: 60%;
-    }
-
-    .leaderboard {
-        max-height: 200px;
+    .hole.active::after,
+    .hole.caught::after {
+        width: 100%;
+        height: 100%;
     }
 }
 
@@ -463,10 +451,5 @@ button:active {
 @media (max-width: 320px) {
     .game-info {
         font-size: 1em;
-    }
-
-    .hole.active::after {
-        width: 50%;
-        height: 50%;
     }
 }
