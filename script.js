@@ -224,10 +224,10 @@ class WhacAMole {
         // 잡힌 상태로 변경 (깨꼬닥 이미지로 전환)
         hole.classList.add('caught');
         
-        // 2초 후에 비버 제거 (caught 애니메이션 시간과 동일)
+        // 1.4초 후에 비버 제거 (caught 애니메이션 시간과 동일)
         setTimeout(() => {
             hole.classList.remove('active', 'caught');
-        }, 2000);
+        }, 1400);
     }
     
     endGame() {
