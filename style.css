@@ -55,6 +55,11 @@ body {
 .mole-intro {
     margin: 30px 0;
     animation: float 3s ease-in-out infinite;
+    width: 150px;
+    height: 150px;
+    margin: 30px auto;
+    background: url('images/beaver.png') no-repeat center center;
+    background-size: contain;
 }
 
 .intro-beaver {
@@ -146,36 +151,42 @@ body {
 
 .hole.caught::after {
     background-image: url('images/beaver-caught.png');
-    animation: caughtAnimation 0.5s ease-out;
+    animation: caughtAnimation 0.8s ease-out;
+    opacity: 0.8;
 }
 
 @keyframes caughtAnimation {
     0% {
         transform: translate(-50%, -50%) scale(1);
         filter: brightness(1);
+        opacity: 1;
     }
     10% {
         transform: translate(-50%, -50%) scale(1.2);
         filter: brightness(1.2);
+        opacity: 0.9;
     }
     30% {
         transform: translate(-50%, -50%) scale(0.8);
         filter: brightness(0.8);
+        opacity: 0.8;
     }
     50% {
         transform: translate(-50%, -50%) scale(1.1);
         filter: brightness(1.1);
+        opacity: 0.8;
     }
     100% {
         transform: translate(-50%, -50%) scale(1);
         filter: brightness(1);
+        opacity: 0.7;
     }
 }
 
 .hole.removing::after {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.8);
-    transition: all 0.2s ease-out;
+    transition: all 0.4s ease-out;
 }
 
 .hole.caught {
