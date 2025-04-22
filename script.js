@@ -161,7 +161,7 @@ class WhacAMole {
 
         if (this.isFeverTime) {
             const numMoles = Math.floor(Math.random() * 2) + 2; // 2~3
-            const availableHoles = [...this.holes];
+            const availableHoles = [...this.holes].filter(hole => !hole.classList.contains('caught'));
             
             for (let i = 0; i < numMoles; i++) {
                 if (availableHoles.length === 0) break;
@@ -176,8 +176,11 @@ class WhacAMole {
             }
         } else {
             let randomHole;
+            const availableHoles = [...this.holes].filter(hole => !hole.classList.contains('caught'));
+            if (availableHoles.length === 0) return;
+            
             do {
-                randomHole = this.holes[Math.floor(Math.random() * this.holes.length)];
+                randomHole = availableHoles[Math.floor(Math.random() * availableHoles.length)];
             } while (randomHole === this.lastHole);
             
             this.lastHole = randomHole;
@@ -225,7 +228,7 @@ class WhacAMole {
         
         setTimeout(() => {
             hole.classList.remove('caught');
-        }, 800);
+        }, 2000);
     }
     
     endGame() {
