@@ -24,29 +24,30 @@
                     <p>🥇 골드: 400점</p>
                 </div>
             </div>
+            <div id="leaderboard-container" class="leaderboard">
+                <h3>🏆 최고 점수</h3>
+                <div id="leaderboard-list"></div>
+            </div>
             <button id="start-button">게임 시작</button>
         </div>
 
         <!-- 게임 화면 -->
         <div id="game-screen" class="screen hidden">
             <div class="game-info">
-                <div id="score">점수: 0</div>
-                <div id="timer-container">
-                    <div class="hourglass">⌛</div>
-                    <div id="time">60초</div>
-                </div>
-                <div id="fever-indicator" class="hidden">FEVER TIME! 🔥</div>
+                <div class="score">점수: <span id="score">0</span></div>
+                <div class="time">시간: <span id="time">60</span>초</div>
+                <div id="fever-message" class="hidden">⚡ 피버타임! ⚡</div>
             </div>
-            <div class="grid">
-                <div class="hole"><div class="mole">🦫</div></div>
-                <div class="hole"><div class="mole">🦫</div></div>
-                <div class="hole"><div class="mole">🦫</div></div>
-                <div class="hole"><div class="mole">🦫</div></div>
-                <div class="hole"><div class="mole">🦫</div></div>
-                <div class="hole"><div class="mole">🦫</div></div>
-                <div class="hole"><div class="mole">🦫</div></div>
-                <div class="hole"><div class="mole">🦫</div></div>
-                <div class="hole"><div class="mole">🦫</div></div>
+            <div class="game-board">
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
+                <div class="hole"></div>
             </div>
         </div>
 
@@ -58,24 +59,37 @@
                 <div class="medal-image"></div>
                 <p class="medal-text"></p>
             </div>
+            <div id="nickname-form" class="hidden">
+                <input type="text" id="nickname" placeholder="닉네임을 입력하세요" maxlength="10">
+                <button id="save-score">점수 저장</button>
+            </div>
             <button id="restart-button">다시 시작</button>
         </div>
     </div>
 
-    <!-- 오디오 요소들 -->
-    <audio id="bgm" loop>
-        <source src="sounds/bgm.mp3" type="audio/mp3">
-    </audio>
-    <audio id="whack-sound">
-        <source src="sounds/whack.mp3" type="audio/mp3">
-    </audio>
-    <audio id="fever-sound">
-        <source src="sounds/fever.mp3" type="audio/mp3">
-    </audio>
-    <audio id="tada-sound">
-        <source src="sounds/tada.mp3" type="audio/mp3">
-    </audio>
+    <!-- 오디오 요소 -->
+    <audio id="whack-sound" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
+    <audio id="bgm" src="https://assets.mixkit.co/active_storage/sfx/1667/1667-preview.mp3" loop></audio>
+    <audio id="tada-sound" src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"></audio>
 
-    <script src="script.js"></script>
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+        import { getDatabase } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAkXiwkIIDd9UPBDF_d23MOzrv0d7ATn4s",
+            authDomain: "whack-a-mole-ranking.firebaseapp.com",
+            databaseURL: "https://whack-a-mole-ranking-default-rtdb.firebaseio.com",
+            projectId: "whack-a-mole-ranking",
+            storageBucket: "whack-a-mole-ranking.firebasestorage.app",
+            messagingSenderId: "249262896622",
+            appId: "1:249262896622:web:b385ce433cc3839db68aff"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        window.db = getDatabase(app);
+    </script>
+    <script src="script.js" type="module"></script>
 </body>
 </html>
