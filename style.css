@@ -159,7 +159,7 @@ body {
     box-shadow: 0 0 20px rgba(255, 87, 34, 0.6);
     pointer-events: none;
     transform: scale(0.95);
-    transition: transform 0.2s ease-out;
+    transition: transform 0.2s ease-out, background-color 0.3s ease-out;
 }
 
 .hole.caught::after {
@@ -167,6 +167,15 @@ body {
     opacity: 0.5;
     transform: translate(-50%, -50%) scale(0.8);
     transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    animation: caughtShake 0.3s ease-out;
+}
+
+@keyframes caughtShake {
+    0% { transform: translate(-50%, -50%) scale(0.8) rotate(0deg); }
+    25% { transform: translate(-50%, -50%) scale(0.8) rotate(-5deg); }
+    50% { transform: translate(-50%, -50%) scale(0.8) rotate(5deg); }
+    75% { transform: translate(-50%, -50%) scale(0.8) rotate(-3deg); }
+    100% { transform: translate(-50%, -50%) scale(0.8) rotate(0deg); }
 }
 
 @keyframes holeFlash {
