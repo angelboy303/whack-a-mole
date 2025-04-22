@@ -208,6 +208,7 @@ body {
     }
 }
 
+/* 일반 팝업 애니메이션 */
 @keyframes popUp {
     0% { 
         transform: translate(-50%, 100%);
@@ -225,6 +226,43 @@ body {
         transform: translate(-50%, -50%);
         opacity: 1;
     }
+}
+
+/* 울트라 피버타임용 빠른 팝업 애니메이션 */
+@keyframes ultraPopUp {
+    0% { 
+        transform: translate(-50%, 100%);
+        opacity: 0;
+    }
+    40% {
+        transform: translate(-50%, -55%);
+        opacity: 0.9;
+    }
+    100% { 
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+}
+
+/* 빠른 제거 애니메이션 */
+@keyframes quickRemove {
+    0% {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, 100%);
+        opacity: 0;
+    }
+}
+
+/* 울트라 피버타임일 때의 스타일 */
+.ultra-fever .hole.active::after {
+    animation: ultraPopUp 0.15s ease-out;
+}
+
+.ultra-fever .hole.removing::after {
+    animation: quickRemove 0.1s ease-in;
 }
 
 /* 시간 표시 스타일 */
