@@ -186,7 +186,7 @@ class WhacAMole {
             }, 100);
         }
         
-        const disappearTime = this.isUltraFeverTime ? 400 : (this.isFeverTime ? 600 : 800);
+        const disappearTime = this.isUltraFeverTime ? 600 : (this.isFeverTime ? 800 : 1000);
         
         setTimeout(() => {
             this.holes.forEach(hole => {
@@ -225,7 +225,7 @@ class WhacAMole {
         
         setTimeout(() => {
             hole.classList.remove('caught');
-        }, 500);
+        }, 800);
     }
     
     endGame() {
