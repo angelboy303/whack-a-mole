@@ -6,6 +6,10 @@ class WhacAMole {
         this.moleInterval = null;
         this.isPlaying = false;
 
+        // 효과음 요소
+        this.whackSound = document.getElementById('whack-sound');
+        this.appearSound = document.getElementById('appear-sound');
+
         // 화면 요소들
         this.startScreen = document.getElementById('start-screen');
         this.gameScreen = document.getElementById('game-screen');
@@ -30,19 +34,14 @@ class WhacAMole {
         this.timeLeft = 30;
         this.isPlaying = true;
         
-        // 화면 전환
         this.startScreen.classList.add('hidden');
         this.endScreen.classList.add('hidden');
         this.gameScreen.classList.remove('hidden');
         
-        // 점수와 시간 초기화
         this.updateScore();
         this.updateTime();
 
-        // 게임 타이머 시작
         this.gameInterval = setInterval(() => this.updateTimer(), 1000);
-        
-        // 두더지 출현 시작
         this.moleInterval = setInterval(() => this.showMole(), 1000);
     }
 
@@ -51,16 +50,12 @@ class WhacAMole {
         clearInterval(this.gameInterval);
         clearInterval(this.moleInterval);
         
-        // 모든 두더지 숨기기
         this.holes.forEach(hole => {
-            hole.textContent = '🕳️';
             hole.classList.remove('active');
         });
 
-        // 최종 점수 표시
         this.finalScoreDisplay.textContent = `최종 점수: ${this.score}`;
         
-        // 화면 전환
         this.gameScreen.classList.add('hidden');
         this.endScreen.classList.remove('hidden');
     }
@@ -83,29 +78,29 @@ class WhacAMole {
     }
 
     showMole() {
-        // 모든 두더지 숨기기
         this.holes.forEach(hole => {
-            hole.textContent = '🕳️';
             hole.classList.remove('active');
         });
 
-        // 랜덤한 위치에 두더지 출현
         const randomHole = this.holes[Math.floor(Math.random() * this.holes.length)];
-        randomHole.textContent = '🦔';
         randomHole.classList.add('active');
+        this.appearSound.currentTime = 0;
+        this.appearSound.play();
     }
 
     whack(hole) {
         if (!this.isPlaying) return;
         
-        if (hole.textContent === '🦔') {
+        if (hole.classList.contains('active')) {
             this.score += 10;
             this.updateScore();
-            hole.textContent = '🕳️';
             hole.classList.remove('active');
+            
+            this.whackSound.currentTime = 0;
+            this.whackSound.play();
         }
     }
 }
 
 // 게임 인스턴스 생성
-const game = new WhacAMole();
+const game
