@@ -193,7 +193,7 @@ class WhacAMole {
             
             this.lastHole = randomHole;
             setTimeout(() => {
-                if (!randomHole.classList.contains('caught')) {
+                if (!hole.classList.contains('caught')) {
                     randomHole.classList.add('active');
                 }
             }, 200);
@@ -234,23 +234,16 @@ class WhacAMole {
         this.score += points;
         this.scoreDisplay.textContent = this.score;
 
-        // 게임 상태에 따라 애니메이션 시간 조절
-        const flashDuration = this.isUltraFeverTime ? '0.3s' : (this.isFeverTime ? '0.4s' : '0.5s');
-        hole.style.setProperty('--flash-duration', flashDuration);
-
         // 잡힌 상태로 변경 (깨꼬닥 이미지로 전환)
         hole.classList.add('caught');
         
         // 게임 상태에 따라 다른 지속 시간 적용
         const caughtDuration = this.isUltraFeverTime ? 1000 : (this.isFeverTime ? 1200 : 1400);
-        hole.style.setProperty('--caught-duration', `${caughtDuration}ms`);
         
         // 애니메이션 완료 후 상태 초기화
         setTimeout(() => {
             hole.classList.remove('caught');
             hole.classList.remove('active');
-            hole.style.removeProperty('--caught-duration');
-            hole.style.removeProperty('--flash-duration');
         }, caughtDuration);
     }
     
