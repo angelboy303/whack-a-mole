@@ -10,14 +10,38 @@ body {
     align-items: center;
     min-height: 100vh;
     background-color: #87CEEB;
-    font-family: Arial, sans-serif;
+    font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
 }
 
 .game-container {
     background-color: white;
     padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+}
+
+.mole-intro {
+    margin: 20px 0;
+}
+
+.intro-mole {
+    width: 150px;
+    height: 150px;
+    animation: bounce 1s infinite;
+}
+
+.game-instructions {
+    background-color: #f8f8f8;
+    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin: 20px 0;
+}
+
+.game-instructions p {
+    margin: 10px 0;
+    font-size: 1.1rem;
+    color: #444;
 }
 
 .screen {
@@ -39,47 +63,64 @@ body {
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 15px;
     margin: 20px 0;
 }
 
 .hole {
     width: 100px;
     height: 100px;
-    background-color: #654321;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 50px;
-    cursor: pointer;
-    transition: transform 0.1s;
-}
-
-.hole.active {
     background-color: #8B4513;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
 }
 
-.hole:active {
-    transform: scale(0.95);
+.mole {
+    width: 80%;
+    height: 80%;
+    background-image: url('mole.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    bottom: 100%;
+    left: 10%;
+    transition: bottom 0.1s;
+}
+
+.hole.active .mole {
+    bottom: 0;
 }
 
 button {
-    padding: 10px 20px;
+    padding: 12px 30px;
     font-size: 1.2rem;
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
     margin: 10px 0;
+    transition: transform 0.1s, background-color 0.3s;
 }
 
 button:hover {
     background-color: #45a049;
+    transform: scale(1.05);
 }
 
 h1, h2 {
     color: #333;
     margin-bottom: 1rem;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
 }
