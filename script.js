@@ -112,6 +112,7 @@ class WhacAMole {
         }
         
         this.gameInterval = setInterval(() => this.updateTimer(), 1000);
+        this.showRandomMole();
         this.moleInterval = setInterval(() => this.showRandomMole(), 1200);
     }
     
@@ -179,11 +180,9 @@ class WhacAMole {
                 .slice(0, numMoles);
             
             selectedHoles.forEach(hole => {
-                setTimeout(() => {
-                    if (!hole.classList.contains('caught')) {
-                        hole.classList.add('active');
-                    }
-                }, 200);
+                if (!hole.classList.contains('caught')) {
+                    hole.classList.add('active');
+                }
             });
         } else {
             let randomHole;
@@ -192,11 +191,9 @@ class WhacAMole {
             } while (randomHole === this.lastHole && availableHoles.length > 1);
             
             this.lastHole = randomHole;
-            setTimeout(() => {
-                if (!hole.classList.contains('caught')) {
-                    randomHole.classList.add('active');
-                }
-            }, 200);
+            if (!randomHole.classList.contains('caught')) {
+                randomHole.classList.add('active');
+            }
         }
         
         const disappearTime = this.isUltraFeverTime ? 700 : (this.isFeverTime ? 900 : 1100);
