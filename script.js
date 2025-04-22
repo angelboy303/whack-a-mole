@@ -136,20 +136,43 @@ class WhacAMole {
     showRandomMole() {
         this.holes.forEach(hole => hole.classList.remove('active'));
         
-        // 이전 구멍과 다른 구멍을 선택
-        let randomHole;
-        do {
-            randomHole = this.holes[Math.floor(Math.random() * this.holes.length)];
-        } while (randomHole === this.lastHole);
-        
-        this.lastHole = randomHole;
-        randomHole.classList.add('active');
+        if (this.isFeverTime) {
+            // Fever Time: 1~3마리의 비버가 랜덤하게 나타남
+            const numMoles = Math.floor(Math.random() * 3) + 1; // 1~3
+            const availableHoles = [...this.holes];
+            
+            for (let i = 0; i < numMoles; i++) {
+                if (availableHoles.length === 0) break;
+                
+                const randomIndex = Math.floor(Math.random() * availableHoles.length);
+                const randomHole = availableHoles[randomIndex];
+                
+                // 이전 구멍과 다른 구멍을 선택
+                if (randomHole !== this.lastHole) {
+                    randomHole.classList.add('active');
+                    this.lastHole = randomHole;
+                }
+                
+                availableHoles.splice(randomIndex, 1);
+            }
+        } else {
+            // 일반 시간: 1마리의 비버만 나타남
+            let randomHole;
+            do {
+                randomHole = this.holes[Math.floor(Math.random() * this.holes.length)];
+            } while (randomHole === this.lastHole);
+            
+            this.lastHole = randomHole;
+            randomHole.classList.add('active');
+        }
         
         // 일정 시간 후 자동으로 사라지게 설정
         setTimeout(() => {
-            if (randomHole.classList.contains('active')) {
-                randomHole.classList.remove('active');
-            }
+            this.holes.forEach(hole => {
+                if (hole.classList.contains('active')) {
+                    hole.classList.remove('active');
+                }
+            });
         }, this.isFeverTime ? 800 : 1500);
     }
     
