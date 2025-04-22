@@ -151,7 +151,7 @@ class WhacAMole {
     showRandomMole() {
         // 먼저 모든 비버 제거
         this.holes.forEach(hole => {
-            if (hole.classList.contains('active')) {
+            if (hole.classList.contains('active') && !hole.classList.contains('caught')) {
                 hole.classList.add('removing');
                 setTimeout(() => {
                     hole.classList.remove('active', 'removing');
@@ -161,16 +161,16 @@ class WhacAMole {
 
         if (this.isFeverTime) {
             const numMoles = Math.floor(Math.random() * 2) + 2; // 2~3
-            const availableHoles = [...this.holes];
+            const availableHoles = [...this.holes].filter(hole => !hole.classList.contains('caught'));
             
-            for (let i = 0; i < numMoles; i++) {
-                if (availableHoles.length === 0) break;
-                
+            for (let i = 0; i < numMoles && availableHoles.length > 0; i++) {
                 const randomIndex = Math.floor(Math.random() * availableHoles.length);
                 const randomHole = availableHoles[randomIndex];
                 
                 setTimeout(() => {
-                    randomHole.classList.add('active');
+                    if (!randomHole.classList.contains('caught')) {
+                        randomHole.classList.add('active');
+                    }
                 }, 200);
                 availableHoles.splice(randomIndex, 1);
             }
@@ -178,11 +178,13 @@ class WhacAMole {
             let randomHole;
             do {
                 randomHole = this.holes[Math.floor(Math.random() * this.holes.length)];
-            } while (randomHole === this.lastHole);
+            } while (randomHole === this.lastHole || randomHole.classList.contains('caught'));
             
             this.lastHole = randomHole;
             setTimeout(() => {
-                randomHole.classList.add('active');
+                if (!randomHole.classList.contains('caught')) {
+                    randomHole.classList.add('active');
+                }
             }, 200);
         }
         
@@ -190,7 +192,7 @@ class WhacAMole {
         
         setTimeout(() => {
             this.holes.forEach(hole => {
-                if (hole.classList.contains('active')) {
+                if (hole.classList.contains('active') && !hole.classList.contains('caught')) {
                     hole.classList.add('removing');
                     setTimeout(() => {
                         hole.classList.remove('active', 'removing');
@@ -208,9 +210,7 @@ class WhacAMole {
             this.whackSound.play();
         }
         
-        hole.classList.add('caught');
-        hole.classList.remove('active');
-        
+        // 점수 계산
         let points = 10;
         if (this.isUltraFeverTime) {
             points *= 3;
@@ -220,10 +220,14 @@ class WhacAMole {
         
         this.score += points;
         this.scoreDisplay.textContent = this.score;
+
+        // 잡힌 상태로 변경 (깨꼬닥 이미지로 전환)
+        hole.classList.add('caught');
         
+        // 2초 후에 비버 제거 (caught 애니메이션 시간과 동일)
         setTimeout(() => {
-            hole.classList.remove('caught');
-        }, 800);
+            hole.classList.remove('active', 'caught');
+        }, 2000);
     }
     
     endGame() {
