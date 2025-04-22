@@ -226,9 +226,11 @@ class WhacAMole {
             scoreElement.style.transform = 'scale(1)';
         }, 200);
         
+        // 피버타임에 따라 깨꼬닥 시간 조정
+        const caughtDuration = this.isUltraFeverTime ? 800 : (this.isFeverTime ? 1000 : 1400);
         setTimeout(() => {
             hole.classList.remove('caught');
-        }, 2000);
+        }, caughtDuration);
     }
     
     endGame() {
