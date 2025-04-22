@@ -132,7 +132,7 @@ class WhacAMole {
             }
         }
         
-        if (this.timeLeft === 15) {
+        if (this.timeLeft === 4) {
             this.isUltraFeverTime = true;
             clearInterval(this.moleInterval);
             this.moleInterval = setInterval(() => this.showRandomMole(), 500);
@@ -225,7 +225,7 @@ class WhacAMole {
         hole.classList.add('caught');
         
         // 게임 상태에 따라 다른 지속 시간 적용
-        const caughtDuration = this.isUltraFeverTime ? 800 : (this.isFeverTime ? 1000 : 1400);
+        const caughtDuration = this.isUltraFeverTime ? 1000 : (this.isFeverTime ? 1200 : 1400);
         hole.style.setProperty('--caught-duration', `${caughtDuration}ms`);
         
         setTimeout(() => {
