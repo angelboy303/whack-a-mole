@@ -14,9 +14,14 @@
                 <div class="intro-mole"></div>
             </div>
             <div class="game-instructions">
-                <p>🎮 30초 동안 두더지를 잡아보세요!</p>
+                <p>🎮 1분 동안 두더지를 잡아보세요!</p>
                 <p>🎯 두더지를 클릭하면 10점을 획득합니다</p>
-                <p>⚡ 빠르게 잡을수록 더 높은 점수를 얻을 수 있어요</p>
+                <p>⚡ 30초 후에는 피버타임이 시작됩니다!</p>
+                <div class="score-goals">
+                    <p>🥉 브론즈: 300점</p>
+                    <p>🥈 실버: 500점</p>
+                    <p>🥇 골드: 800점</p>
+                </div>
             </div>
             <button id="start-button">게임 시작</button>
         </div>
@@ -24,7 +29,8 @@
         <div id="game-screen" class="screen hidden">
             <div class="game-info">
                 <div id="score">점수: 0</div>
-                <div id="time">시간: 30</div>
+                <div id="time">시간: 60</div>
+                <div id="fever-indicator" class="hidden">FEVER TIME! 🔥</div>
             </div>
             <div class="grid">
                 <div class="hole"><div class="mole"></div></div>
@@ -42,9 +48,28 @@
         <div id="end-screen" class="screen hidden">
             <h2>게임 종료!</h2>
             <p id="final-score">최종 점수: 0</p>
+            <div id="medal" class="hidden">
+                <div class="medal-image"></div>
+                <p class="medal-text"></p>
+            </div>
             <button id="restart-button">다시 시작</button>
         </div>
     </div>
+
+    <!-- 오디오 요소들 -->
+    <audio id="bgm" loop>
+        <source src="bgm.mp3" type="audio/mp3">
+    </audio>
+    <audio id="whack-sound">
+        <source src="whack.mp3" type="audio/mp3">
+    </audio>
+    <audio id="fever-sound">
+        <source src="fever.mp3" type="audio/mp3">
+    </audio>
+    <audio id="tada-sound">
+        <source src="tada.mp3" type="audio/mp3">
+    </audio>
+
     <script src="script.js"></script>
 </body>
 </html>
