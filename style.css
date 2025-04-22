@@ -140,10 +140,12 @@ body {
     background-image: url('images/beaver.png');
     background-size: contain;
     background-repeat: no-repeat;
+    background-position: center;
     opacity: 1;
     animation: popUp 0.3s ease-out;
     transition: opacity 0.1s ease-out;
     z-index: 1;
+    will-change: transform, opacity;
 }
 
 .hole.removing::after {
@@ -173,9 +175,11 @@ body {
     background-image: url('images/beaver-caught.png');
     background-size: contain;
     background-repeat: no-repeat;
+    background-position: center;
     opacity: 0.5;
     animation: caughtShake 0.3s ease-out;
     z-index: 1;
+    will-change: transform, opacity;
 }
 
 @keyframes caughtShake {
