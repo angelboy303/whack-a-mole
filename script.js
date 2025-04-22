@@ -9,6 +9,9 @@ class WhacAMole {
         this.isUltraFeverTime = false;
         this.lastHole = null;
         
+        // 이미지 미리 로드
+        this.preloadImages();
+        
         // DOM 요소
         this.holes = Array.from(document.querySelectorAll('.hole'));
         this.scoreDisplay = document.getElementById('score');
@@ -44,6 +47,21 @@ class WhacAMole {
         
         // Firebase 리더보드 초기화
         this.initializeLeaderboard();
+    }
+    
+    preloadImages() {
+        // 이미지 미리 로드
+        const images = ['beaver.png', 'beaver-caught.png'];
+        this.preloadedImages = {};
+        
+        images.forEach(imageName => {
+            const img = new Image();
+            img.src = `images/${imageName}`;
+            this.preloadedImages[imageName] = img;
+            
+            // 이미지 로드 완료 시 콘솔에 표시 (디버깅용)
+            img.onload = () => console.log(`Preloaded: ${imageName}`);
+        });
     }
     
     initializeLeaderboard() {
