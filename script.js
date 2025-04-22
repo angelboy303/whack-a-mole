@@ -6,10 +6,6 @@ class WhacAMole {
         this.moleInterval = null;
         this.isPlaying = false;
 
-        // 효과음 요소
-        this.whackSound = document.getElementById('whack-sound');
-        this.appearSound = document.getElementById('appear-sound');
-
         // 화면 요소들
         this.startScreen = document.getElementById('start-screen');
         this.gameScreen = document.getElementById('game-screen');
@@ -40,6 +36,10 @@ class WhacAMole {
         
         this.updateScore();
         this.updateTime();
+
+        // 기존 인터벌 클리어
+        if (this.gameInterval) clearInterval(this.gameInterval);
+        if (this.moleInterval) clearInterval(this.moleInterval);
 
         this.gameInterval = setInterval(() => this.updateTimer(), 1000);
         this.moleInterval = setInterval(() => this.showMole(), 1000);
@@ -84,8 +84,6 @@ class WhacAMole {
 
         const randomHole = this.holes[Math.floor(Math.random() * this.holes.length)];
         randomHole.classList.add('active');
-        this.appearSound.currentTime = 0;
-        this.appearSound.play();
     }
 
     whack(hole) {
@@ -96,11 +94,16 @@ class WhacAMole {
             this.updateScore();
             hole.classList.remove('active');
             
-            this.whackSound.currentTime = 0;
-            this.whackSound.play();
+            // 효과음 대신 시각적 피드백
+            hole.style.backgroundColor = '#45a049';
+            setTimeout(() => {
+                hole.style.backgroundColor = '#8B4513';
+            }, 100);
         }
     }
 }
 
 // 게임 인스턴스 생성
-const game
+document.addEventListener('DOMContentLoaded', () => {
+    const game = new WhacAMole();
+});
