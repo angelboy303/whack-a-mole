@@ -155,7 +155,7 @@ class WhacAMole {
                 hole.classList.add('removing');
                 setTimeout(() => {
                     hole.classList.remove('active', 'removing');
-                }, 100);
+                }, 200);
             }
         });
 
@@ -171,7 +171,7 @@ class WhacAMole {
                 
                 setTimeout(() => {
                     randomHole.classList.add('active');
-                }, 100);
+                }, 200);
                 availableHoles.splice(randomIndex, 1);
             }
         } else {
@@ -183,10 +183,10 @@ class WhacAMole {
             this.lastHole = randomHole;
             setTimeout(() => {
                 randomHole.classList.add('active');
-            }, 100);
+            }, 200);
         }
         
-        const disappearTime = this.isUltraFeverTime ? 400 : (this.isFeverTime ? 600 : 800);
+        const disappearTime = this.isUltraFeverTime ? 600 : (this.isFeverTime ? 800 : 1000);
         
         setTimeout(() => {
             this.holes.forEach(hole => {
@@ -194,38 +194,36 @@ class WhacAMole {
                     hole.classList.add('removing');
                     setTimeout(() => {
                         hole.classList.remove('active', 'removing');
-                    }, 100);
+                    }, 200);
                 }
             });
         }, disappearTime);
     }
     
     whack(hole) {
-        if (!this.isPlaying || !hole.classList.contains('active')) return;
-        
-        hole.classList.add('removing');
-        setTimeout(() => {
-            hole.classList.remove('active', 'removing');
-        }, 100);
-        hole.classList.add('caught');
+        if (!hole.classList.contains('active') || !this.isPlaying) return;
         
         if (this.whackSound) {
             this.whackSound.currentTime = 0;
             this.whackSound.play();
         }
         
-        this.score += this.isFeverTime ? 20 : 10;
-        this.scoreDisplay.textContent = this.score;
+        hole.classList.add('caught');
+        hole.classList.remove('active');
         
-        const scoreElement = this.scoreDisplay;
-        scoreElement.style.transform = 'scale(1.2)';
-        setTimeout(() => {
-            scoreElement.style.transform = 'scale(1)';
-        }, 200);
+        let points = 10;
+        if (this.isUltraFeverTime) {
+            points *= 3;
+        } else if (this.isFeverTime) {
+            points *= 2;
+        }
+        
+        this.score += points;
+        this.scoreDisplay.textContent = this.score;
         
         setTimeout(() => {
             hole.classList.remove('caught');
-        }, 500);
+        }, 800);
     }
     
     endGame() {
