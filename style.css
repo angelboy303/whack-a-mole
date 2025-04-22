@@ -50,7 +50,7 @@ body {
 
 .intro-mole::after {
     content: "🦫";
-    font-size: 100px;
+    font-size: 80px;
 }
 
 /* 게임 화면 스타일 */
