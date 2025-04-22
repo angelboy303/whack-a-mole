@@ -224,10 +224,14 @@ class WhacAMole {
         // 잡힌 상태로 변경 (깨꼬닥 이미지로 전환)
         hole.classList.add('caught');
         
-        // 1.4초 후에 비버 제거 (caught 애니메이션 시간과 동일)
+        // 게임 상태에 따라 다른 지속 시간 적용
+        const caughtDuration = this.isUltraFeverTime ? 800 : (this.isFeverTime ? 1000 : 1400);
+        hole.style.setProperty('--caught-duration', `${caughtDuration}ms`);
+        
         setTimeout(() => {
             hole.classList.remove('active', 'caught');
-        }, 1400);
+            hole.style.removeProperty('--caught-duration');
+        }, caughtDuration);
     }
     
     endGame() {
