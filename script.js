@@ -1,227 +1,182 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+class WhacAMole {
+    constructor() {
+        this.score = 0;
+        this.timeLeft = 60;
+        this.gameInterval = null;
+        this.moleInterval = null;
+        this.isPlaying = false;
+        this.isFever = false;
+        this.moleSpeed = 1000;
+
+        // 점수 목표
+        this.medals = {
+            bronze: 150,
+            silver: 250,
+            gold: 400
+        };
+
+        // 오디오 요소들
+        this.bgm = document.getElementById('bgm');
+        this.whackSound = document.getElementById('whack-sound');
+        this.feverSound = document.getElementById('fever-sound');
+        this.tadaSound = document.getElementById('tada-sound');
+
+        // 화면 요소들
+        this.startScreen = document.getElementById('start-screen');
+        this.gameScreen = document.getElementById('game-screen');
+        this.endScreen = document.getElementById('end-screen');
+        this.scoreDisplay = document.getElementById('score');
+        this.timeDisplay = document.getElementById('time');
+        this.hourglass = document.querySelector('.hourglass');
+        this.finalScoreDisplay = document.getElementById('final-score');
+        this.feverIndicator = document.getElementById('fever-indicator');
+        this.holes = document.querySelectorAll('.hole');
+        this.medal = document.getElementById('medal');
+
+        // 버튼 이벤트 리스너
+        document.getElementById('start-button').addEventListener('click', () => this.startGame());
+        document.getElementById('restart-button').addEventListener('click', () => this.startGame());
+
+        // 두더지 클릭 이벤트
+        this.holes.forEach(hole => {
+            hole.addEventListener('click', () => this.whack(hole));
+        });
+    }
+
+    startGame() {
+        this.score = 0;
+        this.timeLeft = 60;
+        this.isPlaying = true;
+        this.isFever = false;
+        this.moleSpeed = 1000;
+        
+        this.startScreen.classList.add('hidden');
+        this.endScreen.classList.add('hidden');
+        this.gameScreen.classList.remove('hidden');
+        this.feverIndicator.classList.add('hidden');
+        
+        // 시간 표시 초기화
+        this.timeDisplay.classList.remove('urgent');
+        this.hourglass.classList.remove('urgent');
+        
+        this.updateScore();
+        this.updateTime();
+
+        // BGM 시작
+        this.bgm.currentTime = 0;
+        this.bgm.play();
+
+        if (this.gameInterval) clearInterval(this.gameInterval);
+        if (this.moleInterval) clearInterval(this.moleInterval);
+
+        this.gameInterval = setInterval(() => this.updateTimer(), 1000);
+        this.moleInterval = setInterval(() => this.showMole(), this.moleSpeed);
+    }
+
+    startFeverTime() {
+        this.isFever = true;
+        this.moleSpeed = 700;
+        this.feverIndicator.classList.remove('hidden');
+        this.feverSound.play();
+        
+        clearInterval(this.moleInterval);
+        this.moleInterval = setInterval(() => this.showMole(), this.moleSpeed);
+    }
+
+    endGame() {
+        this.isPlaying = false;
+        clearInterval(this.gameInterval);
+        clearInterval(this.moleInterval);
+        
+        this.bgm.pause();
+        this.bgm.currentTime = 0;
+        
+        this.holes.forEach(hole => {
+            hole.classList.remove('active');
+        });
+
+        this.finalScoreDisplay.textContent = `최종 점수: ${this.score}`;
+        
+        // 메달 결정
+        let medalType = null;
+        if (this.score >= this.medals.gold) medalType = '🥇 골드';
+        else if (this.score >= this.medals.silver) medalType = '🥈 실버';
+        else if (this.score >= this.medals.bronze) medalType = '🥉 브론즈';
+
+        if (medalType) {
+            this.medal.classList.remove('hidden');
+            this.medal.querySelector('.medal-text').textContent = `축하합니다! ${medalType} 달성!`;
+            this.tadaSound.play();
+        } else {
+            this.medal.classList.add('hidden');
+        }
+        
+        this.gameScreen.classList.add('hidden');
+        this.endScreen.classList.remove('hidden');
+    }
+
+    updateTimer() {
+        this.timeLeft--;
+        this.updateTime();
+        
+        // 30초 이하일 때 급박한 효과
+        if (this.timeLeft <= 30) {
+            this.timeDisplay.classList.add('urgent');
+            this.hourglass.classList.add('urgent');
+            if (!this.isFever) {
+                this.startFeverTime();
+            }
+        }
+        
+        if (this.timeLeft <= 0) {
+            this.endGame();
+        }
+    }
+
+    updateScore() {
+        this.scoreDisplay.textContent = `점수: ${this.score}`;
+    }
+
+    updateTime() {
+        this.timeDisplay.textContent = `${this.timeLeft}초`;
+    }
+
+    showMole() {
+        this.holes.forEach(hole => {
+            hole.classList.remove('active');
+        });
+
+        const moleCount = this.isFever ? Math.floor(Math.random() * 3) + 1 : 1;
+        
+        for (let i = 0; i < moleCount; i++) {
+            const availableHoles = Array.from(this.holes).filter(hole => !hole.classList.contains('active'));
+            if (availableHoles.length === 0) break;
+            
+            const randomHole = availableHoles[Math.floor(Math.random() * availableHoles.length)];
+            randomHole.classList.add('active');
+        }
+    }
+
+    whack(hole) {
+        if (!this.isPlaying || !hole.classList.contains('active')) return;
+        
+        const mole = hole.querySelector('.mole');
+        mole.classList.add('caught');
+        this.score += 10;
+        this.updateScore();
+        hole.classList.remove('active');
+        
+        this.whackSound.currentTime = 0;
+        this.whackSound.play();
+
+        // 잠시 후 caught 클래스 제거
+        setTimeout(() => {
+            mole.classList.remove('caught');
+        }, 300);
+    }
 }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #87CEEB;
-    font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
-}
-
-.game-container {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 500px;
-    margin: 20px;
-}
-
-.screen {
-    text-align: center;
-    width: 100%;
-}
-
-.hidden {
-    display: none !important;
-}
-
-/* 시작 화면 스타일 */
-.mole-intro {
-    margin: 20px 0;
-    height: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.intro-mole {
-    width: 120px;
-    height: 120px;
-    background-color: #8B4513;
-    border-radius: 50%;
-    position: relative;
-    animation: bounce 1s infinite;
-}
-
-.intro-mole::after {
-    content: "🦫";
-    font-size: 60px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.game-instructions {
-    text-align: left;
-    margin: 20px 0;
-}
-
-.game-instructions p {
-    margin: 10px 0;
-    font-size: 1.1rem;
-    line-height: 1.5;
-}
-
-.score-goals {
-    background-color: #fff3cd;
-    padding: 15px;
-    border-radius: 10px;
-    margin: 15px 0;
-}
-
-.score-goals p {
-    margin: 8px 0;
-    font-size: 1.1rem;
-    color: #856404;
-}
-
-/* 게임 화면 스타일 */
-.game-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    padding: 10px;
-    background-color: #f8f8f8;
-    border-radius: 10px;
-}
-
-#timer-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.hourglass {
-    font-size: 1.5rem;
-    animation: rotate 2s infinite;
-}
-
-.hourglass.urgent {
-    color: #ff4444;
-    animation: rotate 1s infinite;
-}
-
-#time {
-    font-size: 1.2rem;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-
-#time.urgent {
-    color: #ff4444;
-    animation: pulse 1s infinite;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin: 20px auto;
-    width: 100%;
-    max-width: 400px;
-}
-
-.hole {
-    width: 100%;
-    padding-bottom: 100%;
-    background-color: #8B4513;
-    border-radius: 50%;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.mole {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 40px;
-    transition: bottom 0.1s;
-    bottom: -100%;
-}
-
-.mole::after {
-    content: "🦫";
-}
-
-.hole.active .mole {
-    bottom: 0;
-}
-
-#fever-indicator {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #ff4444;
-    color: white;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-weight: bold;
-    z-index: 1;
-}
-
-/* 버튼 스타일 */
-button {
-    padding: 12px 30px;
-    font-size: 1.2rem;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    margin: 15px 0;
-    width: 100%;
-    max-width: 200px;
-    transition: transform 0.1s, background-color 0.3s;
-}
-
-button:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
-}
-
-/* 애니메이션 */
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-@keyframes rotate {
-    0% { transform: rotate(0deg); }
-    50% { transform: rotate(180deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-/* 종료 화면 스타일 */
-.medal-image {
-    width: 100px;
-    height: 100px;
-    margin: 20px auto;
-    animation: popIn 0.5s ease-out;
-}
-
-@keyframes popIn {
-    0% { transform: scale(0); }
-    70% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
+// 게임 인스턴스 생성
+document.addEventListener('DOMContentLoaded', () => {
+    const game = new WhacAMole();
+});
