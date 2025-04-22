@@ -52,7 +52,7 @@ body {
 
 .intro-mole::after {
     content: "🦫";
-    font-size: 90px;
+    font-size: 100px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -139,6 +139,11 @@ body {
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    will-change: transform, background-color;
+}
+
+.hole.caught {
+    animation: whackHole 0.3s ease-out;
 }
 
 .mole {
@@ -148,18 +153,29 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 40px;
-    transition: bottom 0.1s;
+    font-size: 90px;
     bottom: -100%;
-}
-
-.mole::after {
-    content: "🦫";
-    font-size: 70px;  /* 40px에서 70px로 수정 */
+    transition: bottom 0.1s;
+    will-change: transform;
 }
 
 .hole.active .mole {
     bottom: 0;
+}
+
+@keyframes whackHole {
+    0% {
+        transform: scale(1);
+        background-color: #8B4513;
+    }
+    50% {
+        transform: scale(1.1);
+        background-color: #ff4444;
+    }
+    100% {
+        transform: scale(1);
+        background-color: #8B4513;
+    }
 }
 
 #fever-indicator {

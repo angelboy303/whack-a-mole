@@ -63,8 +63,10 @@ class WhacAMole {
         this.updateTime();
 
         // BGM 시작
-        this.bgm.currentTime = 0;
-        this.bgm.play();
+        if (this.bgm) {
+            this.bgm.currentTime = 0;
+            this.bgm.play();
+        }
 
         if (this.gameInterval) clearInterval(this.gameInterval);
         if (this.moleInterval) clearInterval(this.moleInterval);
@@ -77,7 +79,11 @@ class WhacAMole {
         this.isFever = true;
         this.moleSpeed = 700;
         this.feverIndicator.classList.remove('hidden');
-        this.feverSound.play();
+        
+        if (this.feverSound) {
+            this.feverSound.currentTime = 0;
+            this.feverSound.play();
+        }
         
         clearInterval(this.moleInterval);
         this.moleInterval = setInterval(() => this.showMole(), this.moleSpeed);
@@ -88,11 +94,14 @@ class WhacAMole {
         clearInterval(this.gameInterval);
         clearInterval(this.moleInterval);
         
-        this.bgm.pause();
-        this.bgm.currentTime = 0;
+        if (this.bgm) {
+            this.bgm.pause();
+            this.bgm.currentTime = 0;
+        }
         
         this.holes.forEach(hole => {
             hole.classList.remove('active');
+            hole.classList.remove('caught');
         });
 
         this.finalScoreDisplay.textContent = `최종 점수: ${this.score}`;
@@ -106,7 +115,10 @@ class WhacAMole {
         if (medalType) {
             this.medal.classList.remove('hidden');
             this.medal.querySelector('.medal-text').textContent = `축하합니다! ${medalType} 달성!`;
-            this.tadaSound.play();
+            if (this.tadaSound) {
+                this.tadaSound.currentTime = 0;
+                this.tadaSound.play();
+            }
         } else {
             this.medal.classList.add('hidden');
         }
@@ -153,6 +165,7 @@ class WhacAMole {
             if (availableHoles.length === 0) break;
             
             const randomHole = availableHoles[Math.floor(Math.random() * availableHoles.length)];
+            randomHole.classList.remove('caught');  // 이전 애니메이션 제거
             randomHole.classList.add('active');
         }
     }
@@ -160,19 +173,22 @@ class WhacAMole {
     whack(hole) {
         if (!this.isPlaying || !hole.classList.contains('active')) return;
         
-        const mole = hole.querySelector('.mole');
-        mole.classList.add('caught');
         this.score += 10;
         this.updateScore();
+        
+        // 애니메이션 적용
+        hole.classList.add('caught');
         hole.classList.remove('active');
         
-        this.whackSound.currentTime = 0;
-        this.whackSound.play();
+        if (this.whackSound) {
+            this.whackSound.currentTime = 0;
+            this.whackSound.play();
+        }
 
-        // 잠시 후 caught 클래스 제거
+        // 애니메이션이 끝나면 caught 클래스 제거
         setTimeout(() => {
-            mole.classList.remove('caught');
-        }, 300);
+            hole.classList.remove('caught');
+        }, 300);  // 애니메이션 지속 시간과 동일하게 설정
     }
 }
 
