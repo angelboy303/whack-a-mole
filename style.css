@@ -103,11 +103,22 @@ body {
     cursor: pointer;
     overflow: hidden;
     transform-style: preserve-3d;
-    transition: transform 0.3s;
+    transition: all 0.3s;
 }
 
 .hole:hover {
     transform: scale(1.05);
+}
+
+.hole.caught {
+    background: #ff5722;
+    animation: holeFlash 0.5s ease-out;
+}
+
+@keyframes holeFlash {
+    0% { background: #654321; }
+    50% { background: #ff5722; }
+    100% { background: #654321; }
 }
 
 .hole.active::after {
@@ -126,23 +137,6 @@ body {
     100% { transform: translate(-50%, -50%); opacity: 1; }
 }
 
-.hole.caught::after {
-    animation: whackHole 0.5s ease-out;
-}
-
-@keyframes whackHole {
-    0% {
-        transform: translate(-50%, -50%) scale(1);
-    }
-    50% {
-        transform: translate(-50%, -50%) scale(1.3);
-        filter: hue-rotate(45deg) brightness(1.2);
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(1);
-    }
-}
-
 /* 시간 표시 스타일 */
 .time {
     display: flex;
@@ -156,11 +150,13 @@ body {
 .sand-clock {
     font-size: 1.5em;
     animation: rotate 1s linear infinite;
+    display: inline-block;
 }
 
 @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(180deg); }
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(180deg); }
+    100% { transform: rotate(360deg); }
 }
 
 /* 피버타임 스타일 */
