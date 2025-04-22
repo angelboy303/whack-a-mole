@@ -105,10 +105,31 @@ body {
     transform-style: preserve-3d;
     transition: all 0.3s;
     border: 4px solid transparent;
+    pointer-events: none;
 }
 
 .hole:hover {
     transform: scale(1.05);
+}
+
+.hole.active {
+    pointer-events: auto;
+}
+
+.hole.active::after {
+    content: "🦫";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 100px;
+    opacity: 1;
+    transition: opacity 0.1s ease-out;
+}
+
+.hole.removing::after {
+    opacity: 0;
+    transition: opacity 0.1s ease-out;
 }
 
 .hole.caught {
@@ -116,6 +137,7 @@ body {
     animation: holeFlash 0.5s ease-out;
     border-color: #ffa000;
     box-shadow: 0 0 20px rgba(255, 87, 34, 0.6);
+    pointer-events: none;
 }
 
 @keyframes holeFlash {
@@ -136,20 +158,15 @@ body {
     }
 }
 
-.hole.active::after {
-    content: "🦫";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 100px;
-    transition: all 0.3s;
-    animation: popUp 0.3s ease-out;
-}
-
 @keyframes popUp {
-    0% { transform: translate(-50%, 100%); opacity: 0; }
-    100% { transform: translate(-50%, -50%); opacity: 1; }
+    0% { 
+        transform: translate(-50%, 100%);
+        opacity: 0;
+    }
+    100% { 
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
 }
 
 /* 시간 표시 스타일 */
