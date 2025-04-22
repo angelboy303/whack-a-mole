@@ -23,12 +23,28 @@ body {
 
 .mole-intro {
     margin: 20px 0;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .intro-mole {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
+    background-color: #8B4513;
+    border-radius: 50%;
+    position: relative;
     animation: bounce 1s infinite;
+}
+
+.intro-mole::after {
+    content: "🦫";
+    font-size: 60px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .game-instructions {
@@ -49,7 +65,7 @@ body {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .game-info {
@@ -78,16 +94,20 @@ body {
 }
 
 .mole {
-    width: 80%;
-    height: 80%;
-    background-image: url('mole.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+    width: 100%;
+    height: 100%;
     position: absolute;
-    bottom: 100%;
-    left: 10%;
+    bottom: -100%;
+    left: 0;
     transition: bottom 0.1s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+}
+
+.mole::after {
+    content: "🦫";
 }
 
 .hole.active .mole {
