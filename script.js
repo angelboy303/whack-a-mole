@@ -152,6 +152,7 @@ class WhacAMole {
         
         if (this.timeLeft === 4) {
             this.isUltraFeverTime = true;
+            this.gameScreen.querySelector('.game-board').classList.add('ultra-fever');
             clearInterval(this.moleInterval);
             this.moleInterval = setInterval(() => this.showRandomMole(), 700);
         }
@@ -266,56 +267,7 @@ class WhacAMole {
             hole.classList.remove('caught');
         });
         
-        this.finalScoreDisplay.textContent = `최종 점수: ${this.score}`;
+        // 울트라 피버타임 클래스 제거
+        this.gameScreen.querySelector('.game-board').classList.remove('ultra-fever');
         
-        let medalType = null;
-        let medalEmoji = '';
-        if (this.score >= this.medals.gold) {
-            medalType = '🥇 골드';
-            medalEmoji = '🥇';
-        } else if (this.score >= this.medals.silver) {
-            medalType = '🥈 실버';
-            medalEmoji = '🥈';
-        } else if (this.score >= this.medals.bronze) {
-            medalType = '🥉 브론즈';
-            medalEmoji = '🥉';
-        }
-        
-        if (medalType) {
-            this.medal.classList.remove('hidden');
-            this.medal.querySelector('.medal-image').textContent = medalEmoji;
-            this.medal.querySelector('.medal-text').textContent = `축하합니다! ${medalType} 달성!`;
-            
-            const nicknameForm = document.getElementById('nickname-form');
-            nicknameForm.classList.remove('hidden');
-            
-            document.getElementById('save-score').onclick = async () => {
-                const nickname = document.getElementById('nickname').value.trim();
-                if (nickname) {
-                    const saved = await this.saveScore(nickname, this.score);
-                    if (saved) {
-                        nicknameForm.classList.add('hidden');
-                    }
-                }
-            };
-            
-            if (this.tadaSound) {
-                this.tadaSound.currentTime = 0;
-                this.tadaSound.play();
-            }
-        }
-        
-        this.gameScreen.classList.add('hidden');
-        this.endScreen.classList.remove('hidden');
-    }
-    
-    resetGame() {
-        this.endScreen.classList.add('hidden');
-        this.startScreen.classList.remove('hidden');
-        this.medal.classList.add('hidden');
-        document.getElementById('nickname-form').classList.add('hidden');
-        document.getElementById('nickname').value = '';
-    }
-}
-
-const game = new WhacAMole();
+        this.finalScoreDisplay.textContent = `최종 점수: ${this.score}`
