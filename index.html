@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>두더지 잡기 게임</title>
+    <meta name="description" content="비버 잡기 게임 - 빠르게 나타나는 비버를 잡아 높은 점수를 획득하세요!">
+    <meta name="theme-color" content="#8bc34a">
+    <title>비버 잡기 게임</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="game-container">
         <!-- 시작 화면 -->
         <div id="start-screen" class="screen">
-            <h1>두더지 잡기 게임</h1>
+            <h1>비버 잡기 게임</h1>
             <div class="mole-intro">
                 <div class="intro-mole"></div>
             </div>
             <div class="game-instructions">
-                <p>🎮 1분 동안 두더지를 잡아보세요!</p>
-                <p>🎯 두더지를 클릭하면 10점을 획득합니다</p>
+                <p>🎮 1분 동안 비버를 잡아보세요!</p>
+                <p>🎯 비버를 클릭하면 10점을 획득합니다</p>
                 <p>⚡ 30초 후에는 피버타임이 시작됩니다!</p>
                 <div class="score-goals">
                     <p>🥉 브론즈: 150점</p>
@@ -35,8 +40,14 @@
         <div id="game-screen" class="screen hidden">
             <div class="game-info">
                 <div class="score">점수: <span id="score">0</span></div>
-                <div class="time">시간: <span id="time">60</span>초</div>
-                <div id="fever-message" class="hidden">⚡ 피버타임! ⚡</div>
+                <div class="time">
+                    <span class="sand-clock">⌛</span>
+                    <span>시간: <span id="time">60</span>초</span>
+                </div>
+                <div id="fever-message" class="hidden">
+                    <span>피버타임!</span>
+                    <span id="fever-timer">30</span>초
+                </div>
             </div>
             <div class="game-board">
                 <div class="hole"></div>
@@ -60,7 +71,7 @@
                 <p class="medal-text"></p>
             </div>
             <div id="nickname-form" class="hidden">
-                <input type="text" id="nickname" placeholder="닉네임을 입력하세요" maxlength="10">
+                <input type="text" id="nickname" placeholder="닉네임을 입력하세요" maxlength="10" required>
                 <button id="save-score">점수 저장</button>
             </div>
             <button id="restart-button">다시 시작</button>
@@ -68,9 +79,9 @@
     </div>
 
     <!-- 오디오 요소 -->
-    <audio id="whack-sound" src="sounds/whack.mp3"></audio>
-    <audio id="bgm" src="sounds/bgm.mp3" loop></audio>
-    <audio id="tada-sound" src="sounds/tada.mp3"></audio>
+    <audio id="whack-sound" src="sounds/whack.mp3" preload="auto"></audio>
+    <audio id="bgm" src="sounds/bgm.mp3" loop preload="auto"></audio>
+    <audio id="tada-sound" src="sounds/tada.mp3" preload="auto"></audio>
 
     <!-- Firebase SDK -->
     <script type="module">
