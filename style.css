@@ -1,4 +1,5 @@
-/* 기존 CSS에 추가 */
+/* 기존 스타일 유지하고 아래 내용 추가/수정 */
+
 .score-goals {
     background-color: #fff3cd;
     padding: 10px;
@@ -11,31 +12,38 @@
     font-weight: bold;
 }
 
-#fever-indicator {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #ff4444;
-    color: white;
-    padding: 5px 15px;
-    border-radius: 20px;
+#timer-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.hourglass {
+    font-size: 1.5rem;
+    animation: rotate 2s infinite;
+}
+
+.hourglass.urgent {
+    color: #ff4444;
+    animation: rotate 1s infinite;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(180deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#time {
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+#time.urgent {
+    color: #ff4444;
     animation: pulse 1s infinite;
-}
-
-.mole {
-    /* 기존 스타일 유지 */
-}
-
-.mole.caught::after {
-    content: "😵";  /* 잡힌 두더지 표정 */
-}
-
-.medal-image {
-    width: 100px;
-    height: 100px;
-    margin: 20px auto;
-    animation: popIn 0.5s ease-out;
 }
 
 @keyframes pulse {
@@ -44,8 +52,4 @@
     100% { transform: scale(1); }
 }
 
-@keyframes popIn {
-    0% { transform: scale(0); }
-    70% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
+/* 나머지 스타일은 이전과 동일 */
