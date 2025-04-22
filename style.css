@@ -209,7 +209,7 @@ body {
 
 @keyframes removeAnimation {
     0% {
-        transform: translate(-50%, 0%);
+        transform: translate(-50%, -60%);
         opacity: 1;
     }
     100% {
