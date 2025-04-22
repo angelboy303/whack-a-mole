@@ -6,6 +6,7 @@ class WhacAMole {
         this.isPlaying = false;
         this.timeLeft = 60;
         this.isFeverTime = false;
+        this.isUltraFeverTime = false;
         this.lastHole = null;
         
         // DOM 요소
@@ -25,6 +26,7 @@ class WhacAMole {
         this.whackSound = document.getElementById('whack-sound');
         this.bgm = document.getElementById('bgm');
         this.tadaSound = document.getElementById('tada-sound');
+        this.feverSound = document.getElementById('fever-sound');
         
         // 메달 기준
         this.medals = {
@@ -94,6 +96,7 @@ class WhacAMole {
         this.score = 0;
         this.timeLeft = 60;
         this.isFeverTime = false;
+        this.isUltraFeverTime = false;
         
         this.scoreDisplay.textContent = this.score;
         this.timeDisplay.textContent = this.timeLeft;
@@ -109,7 +112,7 @@ class WhacAMole {
         }
         
         this.gameInterval = setInterval(() => this.updateTimer(), 1000);
-        this.moleInterval = setInterval(() => this.showRandomMole(), 1200);
+        this.moleInterval = setInterval(() => this.showRandomMole(), 1000);
     }
     
     updateTimer() {
@@ -121,7 +124,18 @@ class WhacAMole {
             this.feverMessage.classList.remove('hidden');
             document.querySelector('.time').classList.add('fever-time');
             clearInterval(this.moleInterval);
-            this.moleInterval = setInterval(() => this.showRandomMole(), 800);
+            this.moleInterval = setInterval(() => this.showRandomMole(), 700);
+            
+            if (this.feverSound) {
+                this.feverSound.currentTime = 0;
+                this.feverSound.play();
+            }
+        }
+        
+        if (this.timeLeft === 15) {
+            this.isUltraFeverTime = true;
+            clearInterval(this.moleInterval);
+            this.moleInterval = setInterval(() => this.showRandomMole(), 500);
         }
         
         if (this.isFeverTime && this.timeLeft < 30) {
@@ -138,8 +152,7 @@ class WhacAMole {
         this.holes.forEach(hole => hole.classList.remove('active'));
         
         if (this.isFeverTime) {
-            // Fever Time: 1~3마리의 비버가 랜덤하게 나타남
-            const numMoles = Math.floor(Math.random() * 3) + 1; // 1~3
+            const numMoles = Math.floor(Math.random() * 2) + 2;
             const availableHoles = [...this.holes];
             
             for (let i = 0; i < numMoles; i++) {
@@ -148,16 +161,10 @@ class WhacAMole {
                 const randomIndex = Math.floor(Math.random() * availableHoles.length);
                 const randomHole = availableHoles[randomIndex];
                 
-                // 이전 구멍과 다른 구멍을 선택
-                if (randomHole !== this.lastHole) {
-                    randomHole.classList.add('active');
-                    this.lastHole = randomHole;
-                }
-                
+                randomHole.classList.add('active');
                 availableHoles.splice(randomIndex, 1);
             }
         } else {
-            // 일반 시간: 1마리의 비버만 나타남
             let randomHole;
             do {
                 randomHole = this.holes[Math.floor(Math.random() * this.holes.length)];
@@ -167,8 +174,7 @@ class WhacAMole {
             randomHole.classList.add('active');
         }
         
-        // 비버가 사라지는 시간 조정
-        const disappearTime = this.isFeverTime ? 700 : 1000; // 각각 0.7초, 1초 동안 표시
+        const disappearTime = this.isUltraFeverTime ? 400 : (this.isFeverTime ? 600 : 800);
         
         setTimeout(() => {
             this.holes.forEach(hole => {
@@ -193,7 +199,6 @@ class WhacAMole {
         this.score += this.isFeverTime ? 20 : 10;
         this.scoreDisplay.textContent = this.score;
         
-        // 점수 애니메이션
         const scoreElement = this.scoreDisplay;
         scoreElement.style.transform = 'scale(1.2)';
         setTimeout(() => {
@@ -222,7 +227,6 @@ class WhacAMole {
         
         this.finalScoreDisplay.textContent = `최종 점수: ${this.score}`;
         
-        // 메달 결정
         let medalType = null;
         let medalEmoji = '';
         if (this.score >= this.medals.gold) {
@@ -241,11 +245,9 @@ class WhacAMole {
             this.medal.querySelector('.medal-image').textContent = medalEmoji;
             this.medal.querySelector('.medal-text').textContent = `축하합니다! ${medalType} 달성!`;
             
-            // 닉네임 입력 폼 표시
             const nicknameForm = document.getElementById('nickname-form');
             nicknameForm.classList.remove('hidden');
             
-            // 점수 저장 이벤트
             document.getElementById('save-score').onclick = async () => {
                 const nickname = document.getElementById('nickname').value.trim();
                 if (nickname) {
@@ -275,5 +277,4 @@ class WhacAMole {
     }
 }
 
-// 게임 인스턴스 생성
 const game = new WhacAMole();
