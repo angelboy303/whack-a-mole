@@ -124,7 +124,7 @@ class WhacAMole {
             this.feverMessage.classList.remove('hidden');
             document.querySelector('.time').classList.add('fever-time');
             clearInterval(this.moleInterval);
-            this.moleInterval = setInterval(() => this.showRandomMole(), 900);
+            this.moleInterval = setInterval(() => this.showRandomMole(), 700);
             
             if (this.feverSound) {
                 this.feverSound.currentTime = 0;
@@ -135,7 +135,7 @@ class WhacAMole {
         if (this.timeLeft === 4) {
             this.isUltraFeverTime = true;
             clearInterval(this.moleInterval);
-            this.moleInterval = setInterval(() => this.showRandomMole(), 700);
+            this.moleInterval = setInterval(() => this.showRandomMole(), 500);
         }
         
         if (this.isFeverTime && this.timeLeft < 20) {
@@ -189,7 +189,7 @@ class WhacAMole {
             }, 100);
         }
         
-        const disappearTime = this.isUltraFeverTime ? 800 : (this.isFeverTime ? 1000 : 1200);
+        const disappearTime = this.isUltraFeverTime ? 600 : (this.isFeverTime ? 800 : 1000);
         
         setTimeout(() => {
             this.holes.forEach(hole => {
