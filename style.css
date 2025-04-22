@@ -200,7 +200,7 @@ body {
 
 .hole.caught {
     background: #ff5722;
-    animation: holeFlash 0.5s ease-out;
+    animation: holeFlash var(--flash-duration, 0.5s) ease-out;
     border-color: #ffa000;
     box-shadow: 0 0 20px rgba(255, 87, 34, 0.6);
     pointer-events: none;
@@ -212,7 +212,7 @@ body {
         transform: scale(1);
         border-color: transparent;
     }
-    50% { 
+    30% { 
         background: #ff5722;
         transform: scale(1.1);
         border-color: #ffa000;
