@@ -30,9 +30,9 @@ class WhacAMole {
         
         // 메달 기준
         this.medals = {
-            bronze: 150,
-            silver: 250,
-            gold: 400
+            bronze: 300,
+            silver: 550,
+            gold: 850
         };
         
         // 이벤트 리스너
