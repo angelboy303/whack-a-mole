@@ -4,7 +4,7 @@ class WhacAMole {
     constructor() {
         this.score = 0;
         this.isPlaying = false;
-        this.timeLeft = 45;
+        this.timeLeft = 60;
         this.isFeverTime = false;
         this.isUltraFeverTime = false;
         this.lastHole = null;
@@ -30,9 +30,9 @@ class WhacAMole {
         
         // 메달 기준
         this.medals = {
-            bronze: 200,
-            silver: 400,
-            gold: 650
+            bronze: 300,
+            silver: 550,
+            gold: 850
         };
         
         // 이벤트 리스너
@@ -94,7 +94,7 @@ class WhacAMole {
     startGame() {
         this.isPlaying = true;
         this.score = 0;
-        this.timeLeft = 45;
+        this.timeLeft = 60;
         this.isFeverTime = false;
         this.isUltraFeverTime = false;
         
@@ -112,20 +112,19 @@ class WhacAMole {
         }
         
         this.gameInterval = setInterval(() => this.updateTimer(), 1000);
-        this.showRandomMole();
-        this.moleInterval = setInterval(() => this.showRandomMole(), 1200);
+        this.moleInterval = setInterval(() => this.showRandomMole(), 1000);
     }
     
     updateTimer() {
         this.timeLeft--;
         this.timeDisplay.textContent = this.timeLeft;
         
-        if (this.timeLeft === 20) {
+        if (this.timeLeft === 30) {
             this.isFeverTime = true;
             this.feverMessage.classList.remove('hidden');
             document.querySelector('.time').classList.add('fever-time');
             clearInterval(this.moleInterval);
-            this.moleInterval = setInterval(() => this.showRandomMole(), 900);
+            this.moleInterval = setInterval(() => this.showRandomMole(), 700);
             
             if (this.feverSound) {
                 this.feverSound.currentTime = 0;
@@ -133,13 +132,13 @@ class WhacAMole {
             }
         }
         
-        if (this.timeLeft === 8) {
+        if (this.timeLeft === 15) {
             this.isUltraFeverTime = true;
             clearInterval(this.moleInterval);
-            this.moleInterval = setInterval(() => this.showRandomMole(), 600);
+            this.moleInterval = setInterval(() => this.showRandomMole(), 500);
         }
         
-        if (this.isFeverTime && this.timeLeft < 20) {
+        if (this.isFeverTime && this.timeLeft < 30) {
             const feverTimeLeft = this.timeLeft;
             document.getElementById('fever-timer').textContent = feverTimeLeft;
         }
@@ -150,97 +149,82 @@ class WhacAMole {
     }
     
     showRandomMole() {
-        // 먼저 모든 비버 제거 (잡히지 않은 비버만)
+        // 먼저 모든 비버 제거
         this.holes.forEach(hole => {
-            if (hole.classList.contains('active') && !hole.classList.contains('caught')) {
+            if (hole.classList.contains('active')) {
                 hole.classList.add('removing');
                 setTimeout(() => {
-                    if (!hole.classList.contains('caught')) {
-                        hole.classList.remove('active', 'removing');
-                    }
-                }, 800);
+                    hole.classList.remove('active', 'removing');
+                }, 100);
             }
         });
 
-        // 잠시 대기 후 새로운 비버 등장
-        setTimeout(() => {
-            // 사용 가능한 구멍 찾기 (잡힌 비버가 없는 구멍만)
-            const availableHoles = this.holes.filter(hole => 
-                !hole.classList.contains('caught') && !hole.classList.contains('active')
-            );
-
-            if (availableHoles.length === 0) return;
-
-            if (this.isFeverTime) {
-                const numMoles = Math.min(
-                    Math.floor(Math.random() * 2) + 2,
-                    availableHoles.length
-                );
+        if (this.isFeverTime) {
+            const numMoles = Math.floor(Math.random() * 2) + 2; // 2~3
+            const availableHoles = [...this.holes];
+            
+            for (let i = 0; i < numMoles; i++) {
+                if (availableHoles.length === 0) break;
                 
-                const selectedHoles = [...availableHoles]
-                    .sort(() => Math.random() - 0.5)
-                    .slice(0, numMoles);
+                const randomIndex = Math.floor(Math.random() * availableHoles.length);
+                const randomHole = availableHoles[randomIndex];
                 
-                selectedHoles.forEach(hole => {
-                    if (!hole.classList.contains('caught')) {
-                        hole.classList.add('active');
-                    }
-                });
-            } else {
-                let randomHole;
-                do {
-                    randomHole = availableHoles[Math.floor(Math.random() * availableHoles.length)];
-                } while (randomHole === this.lastHole && availableHoles.length > 1);
-                
-                this.lastHole = randomHole;
-                if (!randomHole.classList.contains('caught')) {
+                setTimeout(() => {
                     randomHole.classList.add('active');
-                }
+                }, 100);
+                availableHoles.splice(randomIndex, 1);
             }
-        }, 400);
+        } else {
+            let randomHole;
+            do {
+                randomHole = this.holes[Math.floor(Math.random() * this.holes.length)];
+            } while (randomHole === this.lastHole);
+            
+            this.lastHole = randomHole;
+            setTimeout(() => {
+                randomHole.classList.add('active');
+            }, 100);
+        }
         
-        const disappearTime = this.isUltraFeverTime ? 1500 : (this.isFeverTime ? 1800 : 2000);
+        const disappearTime = this.isUltraFeverTime ? 400 : (this.isFeverTime ? 600 : 800);
         
         setTimeout(() => {
             this.holes.forEach(hole => {
-                if (hole.classList.contains('active') && !hole.classList.contains('caught')) {
+                if (hole.classList.contains('active')) {
                     hole.classList.add('removing');
                     setTimeout(() => {
-                        if (!hole.classList.contains('caught')) {
-                            hole.classList.remove('active', 'removing');
-                        }
-                    }, 800);
+                        hole.classList.remove('active', 'removing');
+                    }, 100);
                 }
             });
         }, disappearTime);
     }
     
     whack(hole) {
-        if (!hole.classList.contains('active') || !this.isPlaying || hole.classList.contains('caught')) return;
+        if (!this.isPlaying || !hole.classList.contains('active')) return;
+        
+        hole.classList.add('removing');
+        setTimeout(() => {
+            hole.classList.remove('active', 'removing');
+        }, 100);
+        hole.classList.add('caught');
         
         if (this.whackSound) {
             this.whackSound.currentTime = 0;
             this.whackSound.play();
         }
         
-        // 점수 계산
-        let points = 10;
-        if (this.isUltraFeverTime) {
-            points *= 3;
-        } else if (this.isFeverTime) {
-            points *= 2;
-        }
-        
-        this.score += points;
+        this.score += this.isFeverTime ? 20 : 10;
         this.scoreDisplay.textContent = this.score;
-
-        // 잡힌 상태로 변경 (깨꼬닥 이미지로 전환)
-        hole.classList.add('caught');
         
-        // 애니메이션 완료 후 상태 초기화
+        const scoreElement = this.scoreDisplay;
+        scoreElement.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+            scoreElement.style.transform = 'scale(1)';
+        }, 200);
+        
         setTimeout(() => {
             hole.classList.remove('caught');
-            hole.classList.remove('active');
         }, 500);
     }
     
