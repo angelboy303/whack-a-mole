@@ -155,10 +155,10 @@ class WhacAMole {
             if (hole.classList.contains('active') && !hole.classList.contains('caught')) {
                 hole.classList.add('removing');
                 setTimeout(() => {
-                    if (!hole.classList.contains('caught')) {  // 잡히지 않은 경우에만 제거
+                    if (!hole.classList.contains('caught')) {
                         hole.classList.remove('active', 'removing');
                     }
-                }, 200);
+                }, 300);
             }
         });
 
@@ -196,7 +196,7 @@ class WhacAMole {
             }
         }
         
-        const disappearTime = this.isUltraFeverTime ? 700 : (this.isFeverTime ? 900 : 1100);
+        const disappearTime = this.isUltraFeverTime ? 1000 : (this.isFeverTime ? 1200 : 1500);
         
         setTimeout(() => {
             this.holes.forEach(hole => {
@@ -206,7 +206,7 @@ class WhacAMole {
                         if (!hole.classList.contains('caught')) {
                             hole.classList.remove('active', 'removing');
                         }
-                    }, 200);
+                    }, 300);
                 }
             });
         }, disappearTime);
@@ -235,7 +235,7 @@ class WhacAMole {
         hole.classList.add('caught');
         
         // 게임 상태에 따라 다른 지속 시간 적용
-        const caughtDuration = this.isUltraFeverTime ? 1000 : (this.isFeverTime ? 1200 : 1400);
+        const caughtDuration = this.isUltraFeverTime ? 1200 : (this.isFeverTime ? 1400 : 1600);
         
         // 애니메이션 완료 후 상태 초기화
         setTimeout(() => {
