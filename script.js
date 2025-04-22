@@ -4,7 +4,7 @@ class WhacAMole {
     constructor() {
         this.score = 0;
         this.isPlaying = false;
-        this.timeLeft = 60;
+        this.timeLeft = 45;
         this.isFeverTime = false;
         this.isUltraFeverTime = false;
         this.lastHole = null;
@@ -30,9 +30,9 @@ class WhacAMole {
         
         // 메달 기준
         this.medals = {
-            bronze: 300,
-            silver: 550,
-            gold: 850
+            bronze: 200,
+            silver: 400,
+            gold: 650
         };
         
         // 이벤트 리스너
@@ -94,7 +94,7 @@ class WhacAMole {
     startGame() {
         this.isPlaying = true;
         this.score = 0;
-        this.timeLeft = 60;
+        this.timeLeft = 45;
         this.isFeverTime = false;
         this.isUltraFeverTime = false;
         
@@ -112,19 +112,19 @@ class WhacAMole {
         }
         
         this.gameInterval = setInterval(() => this.updateTimer(), 1000);
-        this.moleInterval = setInterval(() => this.showRandomMole(), 1000);
+        this.moleInterval = setInterval(() => this.showRandomMole(), 1200);
     }
     
     updateTimer() {
         this.timeLeft--;
         this.timeDisplay.textContent = this.timeLeft;
         
-        if (this.timeLeft === 30) {
+        if (this.timeLeft === 20) {
             this.isFeverTime = true;
             this.feverMessage.classList.remove('hidden');
             document.querySelector('.time').classList.add('fever-time');
             clearInterval(this.moleInterval);
-            this.moleInterval = setInterval(() => this.showRandomMole(), 700);
+            this.moleInterval = setInterval(() => this.showRandomMole(), 900);
             
             if (this.feverSound) {
                 this.feverSound.currentTime = 0;
@@ -132,13 +132,13 @@ class WhacAMole {
             }
         }
         
-        if (this.timeLeft === 4) {
+        if (this.timeLeft === 8) {
             this.isUltraFeverTime = true;
             clearInterval(this.moleInterval);
-            this.moleInterval = setInterval(() => this.showRandomMole(), 500);
+            this.moleInterval = setInterval(() => this.showRandomMole(), 600);
         }
         
-        if (this.isFeverTime && this.timeLeft < 30) {
+        if (this.isFeverTime && this.timeLeft < 20) {
             const feverTimeLeft = this.timeLeft;
             document.getElementById('fever-timer').textContent = feverTimeLeft;
         }
@@ -197,7 +197,7 @@ class WhacAMole {
             }, 200);
         }
         
-        const disappearTime = this.isUltraFeverTime ? 600 : (this.isFeverTime ? 800 : 1000);
+        const disappearTime = this.isUltraFeverTime ? 700 : (this.isFeverTime ? 900 : 1100);
         
         setTimeout(() => {
             this.holes.forEach(hole => {
