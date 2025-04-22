@@ -109,7 +109,7 @@ class WhacAMole {
         }
         
         this.gameInterval = setInterval(() => this.updateTimer(), 1000);
-        this.moleInterval = setInterval(() => this.showRandomMole(), 2000);
+        this.moleInterval = setInterval(() => this.showRandomMole(), 1200);
     }
     
     updateTimer() {
@@ -121,7 +121,7 @@ class WhacAMole {
             this.feverMessage.classList.remove('hidden');
             document.querySelector('.time').classList.add('fever-time');
             clearInterval(this.moleInterval);
-            this.moleInterval = setInterval(() => this.showRandomMole(), 1500);
+            this.moleInterval = setInterval(() => this.showRandomMole(), 800);
         }
         
         if (this.isFeverTime && this.timeLeft < 30) {
@@ -168,7 +168,7 @@ class WhacAMole {
         }
         
         // 비버가 사라지는 시간 조정
-        const disappearTime = this.isFeverTime ? 1300 : 1800; // 각각 1.3초, 1.8초 동안 표시
+        const disappearTime = this.isFeverTime ? 700 : 1000; // 각각 0.7초, 1초 동안 표시
         
         setTimeout(() => {
             this.holes.forEach(hole => {
