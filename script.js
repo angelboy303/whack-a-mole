@@ -119,12 +119,13 @@ class WhacAMole {
         if (this.timeLeft === 30) {
             this.isFeverTime = true;
             this.feverMessage.classList.remove('hidden');
+            document.querySelector('.time').classList.add('fever-time');
             clearInterval(this.moleInterval);
             this.moleInterval = setInterval(() => this.showRandomMole(), 500);
         }
         
         if (this.isFeverTime && this.timeLeft < 30) {
-            const feverTimeLeft = 30 - this.timeLeft;
+            const feverTimeLeft = this.timeLeft;
             document.getElementById('fever-timer').textContent = feverTimeLeft;
         }
         
