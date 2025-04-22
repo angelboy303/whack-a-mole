@@ -153,7 +153,7 @@ class WhacAMole {
         if (this.timeLeft === 4) {
             this.isUltraFeverTime = true;
             clearInterval(this.moleInterval);
-            this.moleInterval = setInterval(() => this.showRandomMole(), 700);
+            this.moleInterval = setInterval(() => this.showRandomMole(), 800);
         }
         
         if (this.isFeverTime && this.timeLeft < 20) {
