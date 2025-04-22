@@ -4,7 +4,7 @@ class WhacAMole {
     constructor() {
         this.score = 0;
         this.isPlaying = false;
-        this.timeLeft = 60;
+        this.timeLeft = 45;
         this.isFeverTime = false;
         this.isUltraFeverTime = false;
         this.lastHole = null;
@@ -94,7 +94,7 @@ class WhacAMole {
     startGame() {
         this.isPlaying = true;
         this.score = 0;
-        this.timeLeft = 60;
+        this.timeLeft = 45;
         this.isFeverTime = false;
         this.isUltraFeverTime = false;
         
@@ -119,7 +119,7 @@ class WhacAMole {
         this.timeLeft--;
         this.timeDisplay.textContent = this.timeLeft;
         
-        if (this.timeLeft === 30) {
+        if (this.timeLeft === 20) {
             this.isFeverTime = true;
             this.feverMessage.classList.remove('hidden');
             document.querySelector('.time').classList.add('fever-time');
@@ -132,13 +132,13 @@ class WhacAMole {
             }
         }
         
-        if (this.timeLeft === 15) {
+        if (this.timeLeft === 4) {
             this.isUltraFeverTime = true;
             clearInterval(this.moleInterval);
             this.moleInterval = setInterval(() => this.showRandomMole(), 500);
         }
         
-        if (this.isFeverTime && this.timeLeft < 30) {
+        if (this.isFeverTime && this.timeLeft < 20) {
             const feverTimeLeft = this.timeLeft;
             document.getElementById('fever-timer').textContent = feverTimeLeft;
         }
