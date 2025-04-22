@@ -193,7 +193,7 @@ class WhacAMole {
             
             this.lastHole = randomHole;
             setTimeout(() => {
-                if (!hole.classList.contains('caught')) {
+                if (!randomHole.classList.contains('caught')) {
                     randomHole.classList.add('active');
                 }
             }, 200);
