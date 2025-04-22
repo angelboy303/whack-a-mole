@@ -57,6 +57,17 @@ body {
     animation: float 3s ease-in-out infinite;
 }
 
+.intro-beaver {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.intro-beaver:hover {
+    transform: scale(1.1);
+}
+
 .intro-mole::after {
     content: "🦫";
     font-size: 120px;
@@ -130,13 +141,41 @@ body {
     background-size: contain;
     opacity: 1;
     animation: popUp 0.3s ease-out;
-    transition: opacity 0.1s ease-out;
+    transition: all 0.1s ease-out;
+}
+
+.hole.caught::after {
+    background-image: url('images/beaver-caught.png');
+    animation: caughtAnimation 0.5s ease-out;
+}
+
+@keyframes caughtAnimation {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        filter: brightness(1);
+    }
+    10% {
+        transform: translate(-50%, -50%) scale(1.2);
+        filter: brightness(1.2);
+    }
+    30% {
+        transform: translate(-50%, -50%) scale(0.8);
+        filter: brightness(0.8);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        filter: brightness(1.1);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        filter: brightness(1);
+    }
 }
 
 .hole.removing::after {
     opacity: 0;
-    transform: translate(-50%, -50%);
-    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition: all 0.2s ease-out;
 }
 
 .hole.caught {
