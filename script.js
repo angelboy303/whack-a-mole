@@ -6,6 +6,7 @@ class WhacAMole {
         this.isPlaying = false;
         this.timeLeft = 60;
         this.isFeverTime = false;
+        this.lastHole = null;
         
         // DOM 요소
         this.holes = Array.from(document.querySelectorAll('.hole'));
@@ -122,6 +123,11 @@ class WhacAMole {
             this.moleInterval = setInterval(() => this.showRandomMole(), 500);
         }
         
+        if (this.isFeverTime && this.timeLeft < 30) {
+            const feverTimeLeft = 30 - this.timeLeft;
+            document.getElementById('fever-timer').textContent = feverTimeLeft;
+        }
+        
         if (this.timeLeft <= 0) {
             this.endGame();
         }
@@ -129,8 +135,22 @@ class WhacAMole {
     
     showRandomMole() {
         this.holes.forEach(hole => hole.classList.remove('active'));
-        const randomHole = this.holes[Math.floor(Math.random() * this.holes.length)];
+        
+        // 이전 구멍과 다른 구멍을 선택
+        let randomHole;
+        do {
+            randomHole = this.holes[Math.floor(Math.random() * this.holes.length)];
+        } while (randomHole === this.lastHole);
+        
+        this.lastHole = randomHole;
         randomHole.classList.add('active');
+        
+        // 일정 시간 후 자동으로 사라지게 설정
+        setTimeout(() => {
+            if (randomHole.classList.contains('active')) {
+                randomHole.classList.remove('active');
+            }
+        }, this.isFeverTime ? 800 : 1500);
     }
     
     whack(hole) {
@@ -146,6 +166,13 @@ class WhacAMole {
         
         this.score += this.isFeverTime ? 20 : 10;
         this.scoreDisplay.textContent = this.score;
+        
+        // 점수 애니메이션
+        const scoreElement = this.scoreDisplay;
+        scoreElement.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+            scoreElement.style.transform = 'scale(1)';
+        }, 200);
         
         setTimeout(() => {
             hole.classList.remove('caught');
@@ -171,12 +198,21 @@ class WhacAMole {
         
         // 메달 결정
         let medalType = null;
-        if (this.score >= this.medals.gold) medalType = '🥇 골드';
-        else if (this.score >= this.medals.silver) medalType = '🥈 실버';
-        else if (this.score >= this.medals.bronze) medalType = '🥉 브론즈';
+        let medalEmoji = '';
+        if (this.score >= this.medals.gold) {
+            medalType = '🥇 골드';
+            medalEmoji = '🥇';
+        } else if (this.score >= this.medals.silver) {
+            medalType = '🥈 실버';
+            medalEmoji = '🥈';
+        } else if (this.score >= this.medals.bronze) {
+            medalType = '🥉 브론즈';
+            medalEmoji = '🥉';
+        }
         
         if (medalType) {
             this.medal.classList.remove('hidden');
+            this.medal.querySelector('.medal-image').textContent = medalEmoji;
             this.medal.querySelector('.medal-text').textContent = `축하합니다! ${medalType} 달성!`;
             
             // 닉네임 입력 폼 표시
@@ -209,6 +245,7 @@ class WhacAMole {
         this.startScreen.classList.remove('hidden');
         this.medal.classList.add('hidden');
         document.getElementById('nickname-form').classList.add('hidden');
+        document.getElementById('nickname').value = '';
     }
 }
 
