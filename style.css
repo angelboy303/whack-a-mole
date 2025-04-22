@@ -43,6 +43,16 @@ body {
     font-weight: bold;
 }
 
+/* 시작 화면의 두더지 */
+.mole-intro {
+    margin: 20px 0;
+}
+
+.intro-mole::after {
+    content: "🦫";
+    font-size: 100px;
+}
+
 /* 게임 화면 스타일 */
 .game-info {
     margin-bottom: 20px;
@@ -70,12 +80,12 @@ body {
 }
 
 .hole.active::after {
-    content: "🦔";
+    content: "🦫";
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 3em;
+    font-size: 100px;
     transition: transform 0.1s;
 }
 
@@ -89,7 +99,7 @@ body {
     }
     50% {
         transform: translate(-50%, -50%) scale(1.2);
-        color: red;
+        filter: hue-rotate(45deg);
     }
     100% {
         transform: translate(-50%, -50%) scale(1);
