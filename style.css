@@ -390,3 +390,111 @@ button:active {
     margin: 15px 0;
     font-size: 1.5em;
 }
+
+/* 모바일 대응을 위한 미디어 쿼리 추가 */
+@media (max-width: 768px) {
+    .game-container {
+        padding: 10px;
+    }
+
+    .screen {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+
+    .game-instructions {
+        font-size: 0.9rem;
+        padding: 15px;
+    }
+
+    .score-goals {
+        font-size: 0.9rem;
+    }
+
+    .game-info {
+        font-size: 1.2rem;
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+
+    .game-board {
+        gap: 10px;
+    }
+
+    .hole.active::after {
+        width: 90%;
+        height: 90%;
+    }
+
+    .hole.caught::after {
+        width: 90%;
+        height: 90%;
+    }
+
+    #fever-message {
+        font-size: 1rem;
+        padding: 8px 15px;
+    }
+
+    .leaderboard {
+        font-size: 0.9rem;
+    }
+
+    .leaderboard-entry {
+        padding: 8px;
+    }
+
+    button {
+        font-size: 1rem;
+        padding: 12px 24px;
+    }
+
+    #nickname {
+        width: 160px;
+        font-size: 0.9rem;
+    }
+}
+
+/* 더 작은 모바일 화면을 위한 추가 미디어 쿼리 */
+@media (max-width: 480px) {
+    .game-container {
+        padding: 5px;
+    }
+
+    .screen {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .game-instructions {
+        font-size: 0.85rem;
+        padding: 10px;
+    }
+
+    .game-info {
+        font-size: 1rem;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .game-board {
+        gap: 8px;
+    }
+
+    .hole.active::after {
+        width: 95%;
+        height: 95%;
+    }
+
+    .hole.caught::after {
+        width: 95%;
+        height: 95%;
+    }
+}
