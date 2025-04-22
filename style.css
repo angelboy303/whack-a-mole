@@ -155,7 +155,8 @@ body {
 
 .hole.caught::after {
     background-image: url('images/beaver-caught.png') !important;
-    animation: caughtAnimation 1.4s ease-out !important;
+    animation: caughtAnimation var(--caught-duration, 1400ms) ease-out !important;
+    opacity: 1 !important;
 }
 
 @keyframes caughtAnimation {
@@ -167,27 +168,27 @@ body {
     15% {
         transform: translate(-50%, -50%) scale(1.2);
         filter: brightness(1.2);
-        opacity: 0.9;
+        opacity: 0.95;
     }
     30% {
         transform: translate(-50%, -50%) scale(0.9);
         filter: brightness(0.9);
-        opacity: 0.7;
+        opacity: 0.85;
     }
     40% {
         transform: translate(-50%, -50%) scale(1);
         filter: brightness(1);
-        opacity: 0.6;
+        opacity: 0.8;
     }
     85% {
         transform: translate(-50%, -50%) scale(1);
         filter: brightness(1);
-        opacity: 0.6;
+        opacity: 0.75;
     }
     100% {
         transform: translate(-50%, -50%) scale(0.95);
         filter: brightness(0.9);
-        opacity: 0.4;
+        opacity: 0.6;
     }
 }
 
