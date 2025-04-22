@@ -151,14 +151,14 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 100%);
     width: 80%;
     height: 80%;
     background: url('images/beaver.png') no-repeat center center;
     background-size: contain;
-    opacity: 1;
-    animation: popUp 0.5s ease-out forwards;
-    transition: all 0.2s ease-out;
+    opacity: 0;
+    animation: popUp 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+    transition: all 0.3s ease-out;
 }
 
 .hole.caught {
@@ -171,7 +171,7 @@ body {
 
 .hole.caught::after {
     background-image: url('images/beaver-caught.png') !important;
-    animation: caughtAnimation 1.2s ease-out forwards !important;
+    animation: caughtAnimation 1s cubic-bezier(0.25, 0.1, 0.25, 1) forwards !important;
     opacity: 1 !important;
 }
 
@@ -195,33 +195,33 @@ body {
 
 @keyframes caughtAnimation {
     0% {
-        transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, 0%) scale(1);
         filter: brightness(1);
         opacity: 1;
     }
     20% {
-        transform: translate(-50%, -50%) scale(1.2);
+        transform: translate(-50%, -20%) scale(1.1);
         filter: brightness(1.2);
         opacity: 0.9;
     }
     40% {
-        transform: translate(-50%, -50%) scale(0.9);
-        filter: brightness(0.9);
+        transform: translate(-50%, -40%) scale(0.95);
+        filter: brightness(1.1);
         opacity: 0.8;
     }
     60% {
-        transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -60%) scale(0.9);
         filter: brightness(1);
         opacity: 0.7;
     }
     80% {
-        transform: translate(-50%, -50%) scale(1);
-        filter: brightness(1);
+        transform: translate(-50%, -80%) scale(0.85);
+        filter: brightness(0.9);
         opacity: 0.6;
     }
     100% {
-        transform: translate(-50%, -50%) scale(0.95);
-        filter: brightness(0.9);
+        transform: translate(-50%, -100%) scale(0.8);
+        filter: brightness(0.8);
         opacity: 0.5;
     }
 }
@@ -232,23 +232,23 @@ body {
         opacity: 0;
     }
     20% {
-        transform: translate(-50%, -20%);
-        opacity: 0.8;
+        transform: translate(-50%, 20%);
+        opacity: 0.6;
     }
     40% {
-        transform: translate(-50%, 0%);
-        opacity: 0.9;
+        transform: translate(-50%, -10%);
+        opacity: 0.8;
     }
     60% {
-        transform: translate(-50%, -10%);
-        opacity: 1;
+        transform: translate(-50%, 5%);
+        opacity: 0.9;
     }
     80% {
-        transform: translate(-50%, 0%);
-        opacity: 1;
+        transform: translate(-50%, -2%);
+        opacity: 0.95;
     }
     100% { 
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, 0%);
         opacity: 1;
     }
 }
