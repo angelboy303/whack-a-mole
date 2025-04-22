@@ -9,23 +9,21 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #87CEEB;
-    font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+    background: #8bc34a;
+    font-family: Arial, sans-serif;
 }
 
 .game-container {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     width: 100%;
-    max-width: 500px;
-    margin: 20px;
+    max-width: 800px;
+    text-align: center;
 }
 
 .screen {
-    text-align: center;
-    width: 100%;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 .hidden {
@@ -33,194 +31,93 @@ body {
 }
 
 /* 시작 화면 스타일 */
-.mole-intro {
-    margin: 20px 0;
-    height: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.intro-mole {
-    width: 120px;
-    height: 120px;
-    background-color: #8B4513;
-    border-radius: 50%;
-    position: relative;
-    animation: bounce 1s infinite;
-}
-
-.intro-mole::after {
-    content: "🦫";
-    font-size: 100px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 .game-instructions {
-    text-align: left;
     margin: 20px 0;
-}
-
-.game-instructions p {
-    margin: 10px 0;
-    font-size: 1.1rem;
-    line-height: 1.5;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 10px;
 }
 
 .score-goals {
-    background-color: #fff3cd;
-    padding: 15px;
-    border-radius: 10px;
-    margin: 15px 0;
-}
-
-.score-goals p {
-    margin: 8px 0;
-    font-size: 1.1rem;
-    color: #856404;
+    margin-top: 15px;
+    font-weight: bold;
 }
 
 /* 게임 화면 스타일 */
 .game-info {
+    margin-bottom: 20px;
+    font-size: 1.5em;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    margin-bottom: 1rem;
-    padding: 10px;
-    background-color: #f8f8f8;
-    border-radius: 10px;
 }
 
-#timer-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.hourglass {
-    font-size: 1.5rem;
-    animation: rotate 2s infinite;
-}
-
-.hourglass.urgent {
-    color: #ff4444;
-    animation: rotate 1s infinite;
-}
-
-#time {
-    font-size: 1.2rem;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-
-#time.urgent {
-    color: #ff4444;
-    animation: pulse 1s infinite;
-}
-
-.grid {
+.game-board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin: 20px auto;
-    width: 100%;
-    max-width: 400px;
+    gap: 10px;
+    margin: 0 auto;
+    max-width: 600px;
 }
 
 .hole {
-    width: 100%;
-    padding-bottom: 100%;
-    background-color: #8B4513;
+    background: #654321;
     border-radius: 50%;
+    padding-top: 100%;
     position: relative;
-    overflow: hidden;
     cursor: pointer;
-    will-change: transform, background-color;
+    overflow: hidden;
 }
 
-.hole.caught {
-    animation: whackHole 0.3s ease-out;
-}
-
-.mole {
+.hole.active::after {
+    content: "🦔";
     position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 90px;
-    bottom: -100%;
-    transition: bottom 0.1s;
-    will-change: transform;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3em;
+    transition: transform 0.1s;
 }
 
-.hole.active .mole {
-    bottom: 0;
+.hole.caught::after {
+    animation: whackHole 0.5s ease-out;
 }
 
 @keyframes whackHole {
     0% {
-        transform: scale(1);
-        background-color: #8B4513;
+        transform: translate(-50%, -50%) scale(1);
     }
     50% {
-        transform: scale(1.1);
-        background-color: #ff4444;
+        transform: translate(-50%, -50%) scale(1.2);
+        color: red;
     }
     100% {
-        transform: scale(1);
-        background-color: #8B4513;
+        transform: translate(-50%, -50%) scale(1);
     }
-}
-
-#fever-indicator {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #ff4444;
-    color: white;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-weight: bold;
-    z-index: 1;
 }
 
 /* 버튼 스타일 */
 button {
-    padding: 12px 30px;
-    font-size: 1.2rem;
-    background-color: #4CAF50;
+    background: #4CAF50;
     color: white;
     border: none;
-    border-radius: 25px;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border-radius: 5px;
     cursor: pointer;
-    margin: 15px 0;
-    width: 100%;
-    max-width: 200px;
-    transition: transform 0.1s, background-color 0.3s;
+    margin: 10px;
+    transition: background 0.3s;
 }
 
 button:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
+    background: #45a049;
 }
 
-/* 애니메이션 */
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-@keyframes rotate {
-    0% { transform: rotate(0deg); }
-    50% { transform: rotate(180deg); }
-    100% { transform: rotate(360deg); }
+/* 피버타임 메시지 */
+#fever-message {
+    color: #ff5722;
+    font-weight: bold;
+    animation: pulse 1s infinite;
 }
 
 @keyframes pulse {
@@ -229,16 +126,58 @@ button:hover {
     100% { transform: scale(1); }
 }
 
-/* 종료 화면 스타일 */
-.medal-image {
-    width: 100px;
-    height: 100px;
-    margin: 20px auto;
-    animation: popIn 0.5s ease-out;
+/* 리더보드 스타일 */
+.leaderboard {
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 20px 0;
+    max-height: 300px;
+    overflow-y: auto;
 }
 
-@keyframes popIn {
-    0% { transform: scale(0); }
-    70% { transform: scale(1.2); }
-    100% { transform: scale(1); }
+.leaderboard h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.leaderboard-entry {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.leaderboard-entry:nth-child(even) {
+    background-color: #fff;
+}
+
+.rank {
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+/* 닉네임 입력 폼 */
+#nickname-form {
+    margin: 15px 0;
+}
+
+#nickname {
+    padding: 10px;
+    border: 2px solid #4CAF50;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-right: 10px;
+}
+
+/* 메달 스타일 */
+.medal-image {
+    font-size: 3em;
+    margin: 10px 0;
+}
+
+.medal-text {
+    color: #4CAF50;
+    font-weight: bold;
+    margin: 10px 0;
 }
