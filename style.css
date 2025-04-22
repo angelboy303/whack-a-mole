@@ -135,8 +135,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 60%;
-    height: 60%;
+    width: 80%;
+    height: 80%;
     background-image: url('images/beaver.png');
     background-size: contain;
     background-repeat: no-repeat;
@@ -163,19 +163,27 @@ body {
 }
 
 .hole.caught::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
     background-image: url('images/beaver-caught.png');
+    background-size: contain;
+    background-repeat: no-repeat;
     opacity: 0.5;
-    transform: translate(-50%, -50%) scale(0.8);
-    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
     animation: caughtShake 0.3s ease-out;
+    z-index: 1;
 }
 
 @keyframes caughtShake {
-    0% { transform: translate(-50%, -50%) scale(0.8) rotate(0deg); }
-    25% { transform: translate(-50%, -50%) scale(0.8) rotate(-5deg); }
-    50% { transform: translate(-50%, -50%) scale(0.8) rotate(5deg); }
-    75% { transform: translate(-50%, -50%) scale(0.8) rotate(-3deg); }
-    100% { transform: translate(-50%, -50%) scale(0.8) rotate(0deg); }
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    25% { transform: translate(-50%, -50%) rotate(-5deg); }
+    50% { transform: translate(-50%, -50%) rotate(5deg); }
+    75% { transform: translate(-50%, -50%) rotate(-3deg); }
+    100% { transform: translate(-50%, -50%) rotate(0deg); }
 }
 
 @keyframes holeFlash {
