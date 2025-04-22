@@ -1,0 +1,85 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #87CEEB;
+    font-family: Arial, sans-serif;
+}
+
+.game-container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.screen {
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.hole {
+    width: 100px;
+    height: 100px;
+    background-color: #654321;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.hole.active {
+    background-color: #8B4513;
+}
+
+.hole:active {
+    transform: scale(0.95);
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+h1, h2 {
+    color: #333;
+    margin-bottom: 1rem;
+}
