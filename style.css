@@ -124,12 +124,14 @@ body {
     transform: translate(-50%, -50%);
     font-size: 100px;
     opacity: 1;
+    animation: popUp 0.3s ease-out;
     transition: opacity 0.1s ease-out;
 }
 
 .hole.removing::after {
     opacity: 0;
-    transition: opacity 0.1s ease-out;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
 }
 
 .hole.caught {
@@ -162,6 +164,14 @@ body {
     0% { 
         transform: translate(-50%, 100%);
         opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -60%);
+        opacity: 0.8;
+    }
+    75% {
+        transform: translate(-50%, -40%);
+        opacity: 0.9;
     }
     100% { 
         transform: translate(-50%, -50%);
