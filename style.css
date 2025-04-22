@@ -154,19 +154,8 @@ body {
 }
 
 .hole.caught::after {
-    background-image: url('images/beaver-caught.png');
-    animation: caughtAnimation 2s ease-out;
-    opacity: 0.8;
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    height: 80%;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+    background-image: url('images/beaver-caught.png') !important;
+    animation: caughtAnimation 1.4s ease-out !important;
 }
 
 @keyframes caughtAnimation {
