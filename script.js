@@ -154,7 +154,9 @@ class WhacAMole {
             if (hole.classList.contains('active') && !hole.classList.contains('caught')) {
                 hole.classList.add('removing');
                 setTimeout(() => {
-                    hole.classList.remove('active', 'removing');
+                    if (!hole.classList.contains('caught')) {  // 잡히지 않은 경우에만 제거
+                        hole.classList.remove('active', 'removing');
+                    }
                 }, 200);
             }
         });
@@ -164,12 +166,12 @@ class WhacAMole {
             !hole.classList.contains('caught') && !hole.classList.contains('active')
         );
 
-        if (availableHoles.length === 0) return;  // 사용 가능한 구멍이 없으면 리턴
+        if (availableHoles.length === 0) return;
 
         if (this.isFeverTime) {
             const numMoles = Math.min(
-                Math.floor(Math.random() * 2) + 2,  // 2~3
-                availableHoles.length  // 사용 가능한 구멍 수를 초과하지 않도록
+                Math.floor(Math.random() * 2) + 2,
+                availableHoles.length
             );
             
             const selectedHoles = [...availableHoles]
@@ -191,7 +193,7 @@ class WhacAMole {
             
             this.lastHole = randomHole;
             setTimeout(() => {
-                if (!randomHole.classList.contains('caught')) {
+                if (!hole.classList.contains('caught')) {
                     randomHole.classList.add('active');
                 }
             }, 200);
@@ -204,7 +206,9 @@ class WhacAMole {
                 if (hole.classList.contains('active') && !hole.classList.contains('caught')) {
                     hole.classList.add('removing');
                     setTimeout(() => {
-                        hole.classList.remove('active', 'removing');
+                        if (!hole.classList.contains('caught')) {
+                            hole.classList.remove('active', 'removing');
+                        }
                     }, 200);
                 }
             });
@@ -241,8 +245,10 @@ class WhacAMole {
         const caughtDuration = this.isUltraFeverTime ? 1000 : (this.isFeverTime ? 1200 : 1400);
         hole.style.setProperty('--caught-duration', `${caughtDuration}ms`);
         
+        // 애니메이션 완료 후 상태 초기화
         setTimeout(() => {
-            hole.classList.remove('active', 'caught');
+            hole.classList.remove('caught');
+            hole.classList.remove('active');
             hole.style.removeProperty('--caught-duration');
             hole.style.removeProperty('--flash-duration');
         }, caughtDuration);
