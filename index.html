@@ -8,6 +8,7 @@
 </head>
 <body>
     <div class="game-container">
+        <!-- 시작 화면 -->
         <div id="start-screen" class="screen">
             <h1>두더지 잡기 게임</h1>
             <div class="mole-intro">
@@ -26,6 +27,7 @@
             <button id="start-button">게임 시작</button>
         </div>
 
+        <!-- 게임 화면 -->
         <div id="game-screen" class="screen hidden">
             <div class="game-info">
                 <div id="score">점수: 0</div>
@@ -48,6 +50,7 @@
             </div>
         </div>
 
+        <!-- 종료 화면 -->
         <div id="end-screen" class="screen hidden">
             <h2>게임 종료!</h2>
             <p id="final-score">최종 점수: 0</p>
@@ -61,16 +64,16 @@
 
     <!-- 오디오 요소들 -->
     <audio id="bgm" loop>
-        <source src="bgm.mp3" type="audio/mp3">
+        <source src="sounds/bgm.mp3" type="audio/mp3">
     </audio>
     <audio id="whack-sound">
-        <source src="whack.mp3" type="audio/mp3">
+        <source src="sounds/whack.mp3" type="audio/mp3">
     </audio>
     <audio id="fever-sound">
-        <source src="fever.mp3" type="audio/mp3">
+        <source src="sounds/fever.mp3" type="audio/mp3">
     </audio>
     <audio id="tada-sound">
-        <source src="tada.mp3" type="audio/mp3">
+        <source src="sounds/tada.mp3" type="audio/mp3">
     </audio>
 
     <script src="script.js"></script>
