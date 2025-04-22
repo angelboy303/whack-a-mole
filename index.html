@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>두더지 잡기 게임</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div id="start-screen" class="screen">
+            <h1>두더지 잡기 게임</h1>
+            <button id="start-button">게임 시작</button>
+        </div>
+
+        <div id="game-screen" class="screen hidden">
+            <div class="game-info">
+                <div id="score">점수: 0</div>
+                <div id="time">시간: 30</div>
+            </div>
+            <div class="grid">
+                <div class="hole">🕳️</div>
+                <div class="hole">🕳️</div>
+                <div class="hole">🕳️</div>
+                <div class="hole">🕳️</div>
+                <div class="hole">🕳️</div>
+                <div class="hole">🕳️</div>
+                <div class="hole">🕳️</div>
+                <div class="hole">🕳️</div>
+                <div class="hole">🕳️</div>
+            </div>
+        </div>
+
+        <div id="end-screen" class="screen hidden">
+            <h2>게임 종료!</h2>
+            <p id="final-score">최종 점수: 0</p>
+            <button id="restart-button">다시 시작</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
