@@ -196,7 +196,7 @@ class WhacAMole {
             }
         }
         
-        const disappearTime = this.isUltraFeverTime ? 1000 : (this.isFeverTime ? 1200 : 1500);
+        const disappearTime = this.isUltraFeverTime ? 800 : (this.isFeverTime ? 1000 : 1200);
         
         setTimeout(() => {
             this.holes.forEach(hole => {
