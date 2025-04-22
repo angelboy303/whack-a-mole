@@ -18,6 +18,7 @@ body {
     max-width: 800px;
     text-align: center;
     padding: 20px;
+    margin: 0 auto;
 }
 
 .screen {
@@ -92,6 +93,7 @@ body {
     gap: 15px;
     margin: 0 auto;
     max-width: 600px;
+    padding: 10px;
     perspective: 1000px;
 }
 
@@ -117,12 +119,15 @@ body {
 }
 
 .hole.active::after {
-    content: "🦫";
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 100px;
+    width: 80%;
+    height: 80%;
+    background: url('images/beaver.png') no-repeat center center;
+    background-size: contain;
     opacity: 1;
     animation: popUp 0.3s ease-out;
     transition: opacity 0.1s ease-out;
@@ -345,4 +350,64 @@ button:active {
     font-weight: bold;
     margin: 15px 0;
     font-size: 1.5em;
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+    .game-container {
+        padding: 10px;
+    }
+
+    .game-board {
+        gap: 10px;
+        padding: 5px;
+    }
+
+    .game-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .score-goals {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .hole.active::after {
+        width: 70%;
+        height: 70%;
+    }
+
+    button {
+        padding: 12px 24px;
+        font-size: 1em;
+    }
+}
+
+/* 작은 모바일 화면 대응 */
+@media (max-width: 480px) {
+    .game-info {
+        font-size: 1.2em;
+    }
+
+    .hole.active::after {
+        width: 60%;
+        height: 60%;
+    }
+
+    .leaderboard {
+        max-height: 200px;
+    }
+}
+
+/* 매우 작은 화면 대응 */
+@media (max-width: 320px) {
+    .game-info {
+        font-size: 1em;
+    }
+
+    .hole.active::after {
+        width: 50%;
+        height: 50%;
+    }
 }
